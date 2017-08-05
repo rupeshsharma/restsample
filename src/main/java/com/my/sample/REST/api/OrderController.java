@@ -29,9 +29,14 @@ private final OrderService orderService;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> addCategory(@RequestBody OrderData orderData) throws Exception {
+	public ResponseEntity<?> createOrder(@RequestBody OrderData orderData) throws Exception {
 		return new ResponseEntity<>(orderService.createOrder(orderData),
 				HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> getOrder() throws Exception {
+		return new ResponseEntity<>(orderService.getOrder(),
+				HttpStatus.OK);
+	}
 }

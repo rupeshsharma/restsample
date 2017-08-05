@@ -37,6 +37,9 @@ public class Order implements Serializable {
 
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
+	
+	@Column(name = "ORDER_DATE")
+	private String orderDate;
 
 	@Column(name = "STATUS")
 	private String status;
@@ -132,5 +135,13 @@ public class Order implements Serializable {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
 	}
 }

@@ -1,5 +1,10 @@
 package com.my.sample.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,9 +42,32 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Long createOrder(OrderData orderData) {
 		Order order = new Order();
-		OrderConverter.convert(orderData, order);
+		OrderConverter.reverse(orderData, order);
+		SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
+		order.setOrderNumber(findMaxOrderNumberForDate(sm.format(new Date())) + 1l);
 		order = orderRepository.save(order);
 		return order.getOrderNumber();
+	}
+
+	private Long findMaxOrderNumberForDate(String orderDate) {
+		Long orderNumber = orderRepository.findMaxOrderNumberForDate(orderDate);
+		if (orderNumber == null) {
+			orderNumber = 0l;
+		}
+		return orderNumber;
+	}
+
+	@Override
+	public List<OrderData> getOrder() {
+		List<OrderData> orderDataList = new ArrayList<OrderData>();
+		List<Order> orderList = orderRepository.findAll();
+		OrderData orderData=null;
+		for(Order order : orderList){
+			orderData = new OrderData();
+			OrderConverter.convert(order,orderData);
+			orderDataList.add(orderData);
+		}
+		return orderDataList;
 	}
 
 }

@@ -97,4 +97,12 @@ public class OrderDetail implements Serializable {
 			return false;
 		return true;
 	}
+
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
 }
