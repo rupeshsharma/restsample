@@ -24,6 +24,8 @@
 		<velocity.version>1.7</velocity.version>
 		<commons.io-version>2.4</commons.io-version>
 		<springsecurity.version>4.0.3.RELEASE</springsecurity.version>
+		<project.build.jdkVersion>1.8</project.build.jdkVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<!-- Spring MVC -->
