@@ -2,39 +2,44 @@ package com.my.sample.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ITEM")
-public class Item implements Serializable {
+@Table(name = "ORDER_DETAIL")
+public class OrderDetail implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5581273688565410791L;
+	private static final long serialVersionUID = 7588200476502977802L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "TITLE")
-	private String title;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ITEM")
+	private Item item;
+	
+	@Column(name = "QUANTITY")
+	private Long quantity;
 
-	@Column(name = "DESCRIPTION")
-	private String description;
+	@Column(name = "UNIT_PRICE")
+	private BigDecimal unitPrice;
 
-	@Column(name = "PRICE")
-	private BigDecimal price;
-
-	@Column(name = "CATEGORY")
-	private Long category;
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
 
 	public Long getId() {
 		return id;
@@ -44,46 +49,30 @@ public class Item implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
-	public String getDescription() {
-		return description;
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
-
-	public Long getCategory() {
-		return category;
-	}
-
-	public void setCategory(Long category) {
-		this.category = category;
-	}
-
-	public Item() {
-
-	}
-
-	public Item(Long id) {
-		this.id = id;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,7 +89,7 @@ public class Item implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Item other = (Item) obj;
+		OrderDetail other = (OrderDetail) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
