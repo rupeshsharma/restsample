@@ -40,12 +40,31 @@ public class Order implements Serializable {
 	
 	@Column(name = "ORDER_DATE")
 	private String orderDate;
+	
+	@Column(name = "PAYMENT_TYPE")
+	private String paymentType;
+	
+	@Column(name = "DINING_MODE")
+	private String diningMode;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
 
 	@Column(name = "STATUS")
 	private String status;
+	
+	@Column(name = "DISCOUNT")
+	private Integer discount;
 
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
+	
+	@Column(name = "CGST")
+	private BigDecimal cgst;
+	
+	@Column(name = "SGST")
+	private BigDecimal sgst;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER")
@@ -143,5 +162,53 @@ public class Order implements Serializable {
 
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public String getDiningMode() {
+		return diningMode;
+	}
+
+	public void setDiningMode(String diningMode) {
+		this.diningMode = diningMode;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public BigDecimal getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(BigDecimal cgst) {
+		this.cgst = cgst;
+	}
+
+	public BigDecimal getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(BigDecimal sgst) {
+		this.sgst = sgst;
 	}
 }
