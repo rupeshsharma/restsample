@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.my.sample.enums.DiningMode;
+import com.my.sample.enums.OrderStatus;
+import com.my.sample.enums.PaymentType;
 
 @Entity
 @Table(name = "ORDER")
@@ -35,24 +41,23 @@ public class Order implements Serializable {
 	@Column(name = "ORDER_NUMBER")
 	private Long orderNumber;
 
-	@Column(name = "CREATED_DATE")
-	private Date createdDate;
-	
 	@Column(name = "ORDER_DATE")
-	private String orderDate;
+	private Date orderDate;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "PAYMENT_TYPE")
-	private String paymentType;
+	private PaymentType paymentType;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "DINING_MODE")
-	private String diningMode;
+	private DiningMode diningMode;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CREATED_BY")
 	private User createdBy;
 
 	@Column(name = "STATUS")
-	private String status;
+	private OrderStatus status;
 	
 	@Column(name = "DISCOUNT")
 	private Integer discount;
@@ -89,22 +94,6 @@ public class Order implements Serializable {
 
 	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public BigDecimal getAmount() {
@@ -156,13 +145,6 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
 
 	public Integer getDiscount() {
 		return discount;
@@ -170,22 +152,6 @@ public class Order implements Serializable {
 
 	public void setDiscount(Integer discount) {
 		this.discount = discount;
-	}
-
-	public String getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(String paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	public String getDiningMode() {
-		return diningMode;
-	}
-
-	public void setDiningMode(String diningMode) {
-		this.diningMode = diningMode;
 	}
 
 	public User getCreatedBy() {
@@ -210,5 +176,37 @@ public class Order implements Serializable {
 
 	public void setSgst(BigDecimal sgst) {
 		this.sgst = sgst;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public DiningMode getDiningMode() {
+		return diningMode;
+	}
+
+	public void setDiningMode(DiningMode diningMode) {
+		this.diningMode = diningMode;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 }

@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.my.sample.enums.OrderStatus;
+
 public class OrderData implements Serializable {
 
 	/**
@@ -16,9 +18,9 @@ public class OrderData implements Serializable {
 
 	private Long orderNumber;
 
-	private Date createdDate;
+	private Date orderDate;
 
-	private String status;
+	private OrderStatus status;
 
 	private BigDecimal amount;
 
@@ -40,22 +42,6 @@ public class OrderData implements Serializable {
 
 	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public BigDecimal getAmount() {
@@ -80,6 +66,22 @@ public class OrderData implements Serializable {
 
 	public void setOrderDetail(List<OrderDetailData> orderDetail) {
 		this.orderDetail = orderDetail;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 
 }
