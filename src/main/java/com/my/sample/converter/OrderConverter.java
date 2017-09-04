@@ -1,6 +1,7 @@
 package com.my.sample.converter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.my.sample.data.OrderData;
@@ -14,7 +15,7 @@ public class OrderConverter {
 
 	public static void reverse(OrderData source, Order target) {
 		target.setAmount(source.getAmount());
-		target.setOrderDate(source.getOrderDate());
+		target.setOrderDate(new Date());
 		target.setStatus(OrderStatus.PROCESSING);
 		target.setCustomer(new Customer(source.getCustomer().getId()));
 		List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();

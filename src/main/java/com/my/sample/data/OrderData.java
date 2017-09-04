@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.my.sample.enums.OrderStatus;
 
 public class OrderData implements Serializable {
@@ -17,7 +18,8 @@ public class OrderData implements Serializable {
 	private Long id;
 
 	private Long orderNumber;
-
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm a z")
 	private Date orderDate;
 
 	private OrderStatus status;

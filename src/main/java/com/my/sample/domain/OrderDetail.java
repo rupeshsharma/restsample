@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "ORDER_DETAIL")
@@ -38,6 +40,7 @@ public class OrderDetail implements Serializable {
 	@Column(name = "UNIT_PRICE")
 	private BigDecimal unitPrice;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 

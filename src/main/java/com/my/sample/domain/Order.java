@@ -19,6 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.my.sample.enums.DiningMode;
 import com.my.sample.enums.OrderStatus;
@@ -41,6 +43,7 @@ public class Order implements Serializable {
 	@Column(name = "ORDER_NUMBER")
 	private Long orderNumber;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ORDER_DATE")
 	private Date orderDate;
 	
