@@ -8,14 +8,16 @@ public class ItemConverter {
 	public static void convert(Item source, ItemData target){
 		target.setId(source.getId());
 		target.setDescription(source.getDescription());
-		target.setCategory(source.getId());
+		target.setCategory(source.getCategory());
 		target.setTitle(source.getTitle());
 		target.setPrice(source.getPrice());
-	}
+		target.setCreatedDate(source.getCreatedDate());
+		target.setModifiedDate(source.getModifiedDate());
+	} 
 	
 	public static void reverse(ItemData source, Item target){
 		target.setDescription(source.getDescription());
-		target.setCategory(source.getId());
+		target.setCategory(source.getCategory());
 		target.setTitle(source.getTitle());
 		target.setPrice(source.getPrice());
 	}

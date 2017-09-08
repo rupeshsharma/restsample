@@ -72,9 +72,9 @@ public class MenuController {
 				HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{id}/item/{itemId}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> removeItemFromCategory(@PathVariable Long id,@PathVariable Long itemId) throws Exception {
-		return new ResponseEntity<>(menuService.removeItemFromCategory(id,itemId),
+	@RequestMapping(value="/item/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> removeItemFromCategory(@PathVariable Long id) throws Exception {
+		return new ResponseEntity<>(menuService.removeItem(id),
 				HttpStatus.OK);
 	}
 	

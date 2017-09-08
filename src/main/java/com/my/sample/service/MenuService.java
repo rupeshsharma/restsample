@@ -12,15 +12,15 @@ public interface MenuService {
 	
 	CategoryData addCategory(CategoryData categoryData);
 	
-	Long addItem(ItemData itemData);
+	ItemData addItem(ItemData itemData);
 
 	List<CategoryData> getCategory();
 
 	List<ItemData> getItemByCategory(Long id);
 
-	Boolean removeItemFromCategory(Long id, Long itemId);
+	Boolean removeItem(Long id);
 
-	Boolean updateItem(ItemData itemData);
+	ItemData updateItem(ItemData itemData);
 
 	Boolean deleteCategory(Long id);
 

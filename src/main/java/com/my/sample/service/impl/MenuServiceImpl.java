@@ -55,23 +55,24 @@ public class MenuServiceImpl implements MenuService {
 		Category category = new Category();
 		CategoryConverter.reverse(categoryData, category);
 		category.setCreatedDate(new Date());
+		category.setStatus('y');
 		category = categoryRepository.save(category);
 		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
 		return categoryData;
 	}
 
 	@Override
-	public Long addItem(ItemData itemData) {
+	public ItemData addItem(ItemData itemData) {
 		Item item = new Item();
-		item.setTitle(itemData.getTitle());
-		item.setPrice(itemData.getPrice());
-		item.setDescription(itemData.getDescription());
-		item.setCategory(itemData.getCategory());
+		ItemConverter.reverse(itemData, item);
+		item.setCreatedDate(new Date());
+		item.setStatus('y');
 		item = itemRepository.save(item);
 		Category category = categoryRepository.findOne(itemData.getCategory());
 		category.getItems().add(item);
-		categoryRepository.save(category);
-		return item.getId();
+		category = categoryRepository.save(category);
+		ItemConverter.convert(item, itemData);
+		return itemData;
 	}
 
 	@Override
@@ -90,9 +91,9 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public List<ItemData> getItemByCategory(Long id) {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();
-		Category category = categoryRepository.findOne(id);
+		List<Item> items = itemRepository.findItemsByCategory(id);
 		ItemData itemData = null;
-		for (Item item : category.getItems()) {
+		for (Item item : items) {
 			itemData = new ItemData();
 			ItemConverter.convert(item, itemData);
 			itemDataList.add(itemData);
@@ -101,21 +102,23 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public Boolean removeItemFromCategory(Long id, Long itemId) {
-		Category category = categoryRepository.findOne(id);
-		category.getItems().remove(new Item(itemId));
-		categoryRepository.save(category);
-		return Boolean.TRUE;
-	}
-
-	@Override
-	public Boolean updateItem(ItemData itemData) {
-		Item item = itemRepository.findOne(itemData.getId());
-		ItemConverter.reverse(itemData, item);
+	public Boolean removeItem(Long id) {
+		Item item = itemRepository.findOne(id);
+		item.setStatus('n');
 		itemRepository.save(item);
 		return Boolean.TRUE;
 	}
 
+	@Override
+	public ItemData updateItem(ItemData itemData) {
+		Item item = itemRepository.findOne(itemData.getId());
+		ItemConverter.reverse(itemData, item);
+		item.setModifiedDate(new Date());
+		item = itemRepository.save(item);
+		ItemConverter.convert(item, itemData);
+		return itemData;
+	}
+ 
 	@Override
 	public Boolean deleteCategory(Long id) {
 		Category category = categoryRepository.findOne(id);

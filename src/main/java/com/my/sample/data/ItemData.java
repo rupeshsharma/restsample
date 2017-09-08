@@ -2,6 +2,10 @@ package com.my.sample.data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.my.sample.config.CustomDateSerializer;
 
 public class ItemData implements Serializable {
 
@@ -19,6 +23,11 @@ public class ItemData implements Serializable {
 	private BigDecimal price;
 
 	private Long category;
+	
+	@JsonSerialize(using = CustomDateSerializer.class)
+	private Date createdDate;
+	@JsonSerialize(using = CustomDateSerializer.class)
+	private Date modifiedDate;
 
 	public Long getId() {
 		return id;
@@ -58,6 +67,22 @@ public class ItemData implements Serializable {
 
 	public void setCategory(Long category) {
 		this.category = category;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 	
 }
