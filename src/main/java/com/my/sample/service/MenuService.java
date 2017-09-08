@@ -10,7 +10,7 @@ public interface MenuService {
 
 	MenuData getMenu();
 	
-	Long addCategory(CategoryData categoryData);
+	CategoryData addCategory(CategoryData categoryData);
 	
 	Long addItem(ItemData itemData);
 
@@ -24,6 +24,6 @@ public interface MenuService {
 
 	Boolean deleteCategory(Long id);
 
-	Boolean updateCategory(CategoryData categoryData);
+	CategoryData updateCategory(CategoryData categoryData);
 	
 }

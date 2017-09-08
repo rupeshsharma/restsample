@@ -1,24 +1,16 @@
 package com.my.sample.converter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-System.out.println(new Date());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+		String formattedDate = formatter.format(new Date());
+		System.out.println(formattedDate);
 
-System.out.println(new Date());
-
-Date date = new Date();
-try {
-	Thread.sleep(1000);
-} catch (InterruptedException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-Date date1 = new Date();
-System.out.println(date1.equals(date));
 	}
 
 }

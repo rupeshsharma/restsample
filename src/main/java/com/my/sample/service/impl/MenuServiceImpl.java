@@ -1,6 +1,7 @@
 package com.my.sample.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,13 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public Long addCategory(CategoryData categoryData) {
+	public CategoryData addCategory(CategoryData categoryData) {
 		Category category = new Category();
-		category.setTitle(categoryData.getTitle());
+		CategoryConverter.reverse(categoryData, category);
+		category.setCreatedDate(new Date());
 		category = categoryRepository.save(category);
-		return category.getId();
+		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
+		return categoryData;
 	}
 
 	@Override
@@ -115,16 +118,20 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Boolean deleteCategory(Long id) {
-		categoryRepository.delete(id);
+		Category category = categoryRepository.findOne(id);
+		category.setStatus('n');
+		categoryRepository.save(category);
 		return Boolean.TRUE;
 	}
 
 	@Override
-	public Boolean updateCategory(CategoryData categoryData) {
+	public CategoryData updateCategory(CategoryData categoryData) {
 		Category category = categoryRepository.findOne(categoryData.getId());
 		CategoryConverter.reverse(categoryData, category);
-		categoryRepository.save(category);
-		return Boolean.TRUE;
+		category.setModifiedDate(new Date());
+		category = categoryRepository.save(category);
+		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
+		return categoryData;
 	}
 
 }

@@ -59,7 +59,7 @@ public class MenuController {
 		return new ResponseEntity<>(menuService.updateCategory(categoryData),
 				HttpStatus.OK);
 	}
-	
+	 
 	@RequestMapping(value="/{id}/item", method = RequestMethod.GET)
 	public ResponseEntity<?> getItemsForCategory(@PathVariable Long id) throws Exception {
 		return new ResponseEntity<>(menuService.getItemByCategory(id),

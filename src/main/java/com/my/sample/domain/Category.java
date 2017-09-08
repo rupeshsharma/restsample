@@ -1,6 +1,7 @@
 package com.my.sample.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -32,6 +35,17 @@ public class Category implements Serializable {
 
 	@Column(name = "TITLE")
 	private String title;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE")
+	private Date modifiedDate;
+	
+	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
+	private char status;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "CATEGORY_ITEM_MAPPING", joinColumns = @JoinColumn(name = "CATEGORY_ID"), inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
@@ -62,9 +76,11 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public Category(Long id, String title) {
+	public Category(Long id, String title, Date createdDate, Date modifiedDate) {
 		this.id = id;
 		this.title = title;
+		this.createdDate = createdDate;
+		this.modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -91,6 +107,11 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString(){
+		return "id="+this.id+" title="+this.title+" total items="+this.items.size();
+	}
 
 	public Set<Item> getItems() {
 		return items;
@@ -98,6 +119,30 @@ public class Category implements Serializable {
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public char getStatus() {
+		return status;
+	}
+
+	public void setStatus(char status) {
+		this.status = status;
 	}
 
 }

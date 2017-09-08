@@ -13,6 +13,8 @@ public class CategoryConverter {
 	public static void convert(Category source, CategoryData target, Boolean isFull) {
 		target.setId(source.getId());
 		target.setTitle(source.getTitle());
+		target.setCreatedDate(source.getCreatedDate());
+		target.setModifiedDate(source.getModifiedDate());
 		if (isFull) {
 			Set<ItemData> itemDataList = new HashSet<ItemData>();
 			ItemData itemData = null;
