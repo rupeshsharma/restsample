@@ -10,7 +10,7 @@ import com.my.sample.domain.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-	@Query("Select i FROM Item i WHERE i.category = :categoryId AND i.status = 'y'")
+	@Query("Select i FROM Item i WHERE i.category.id = :categoryId AND i.status = 'y'")
 	List<Item> findItemsByCategory(@Param("categoryId")Long categoryId);
 
 }

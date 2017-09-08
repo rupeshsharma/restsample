@@ -6,9 +6,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,8 +39,9 @@ public class Item implements Serializable {
 	@Column(name = "PRICE")
 	private BigDecimal price;
 
-	@Column(name = "CATEGORY")
-	private Long category;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CATEGORY_ID")
+	private Category category;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
@@ -82,11 +86,11 @@ public class Item implements Serializable {
 		this.price = price;
 	}
 
-	public Long getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Long category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
