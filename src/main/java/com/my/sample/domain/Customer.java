@@ -1,6 +1,7 @@
 package com.my.sample.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -31,6 +34,14 @@ public class Customer implements Serializable {
 
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MODIFIED_DATE")
+	private Date modifiedDate;
 
 	public Customer() {
 
@@ -95,5 +106,21 @@ public class Customer implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 }
