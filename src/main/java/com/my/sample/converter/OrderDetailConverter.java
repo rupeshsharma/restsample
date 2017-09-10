@@ -12,7 +12,7 @@ public class OrderDetailConverter {
 	public static void reverse(OrderDetailData source, OrderDetail target){
 		target.setCreatedDate(new Date());
 		target.setItem(new Item(source.getItem().getId()));
-		target.setUnitPrice(source.getItem().getPrice());
+		target.setUnitPrice(source.getUnitPrice());
 		target.setQuantity(source.getQuantity());
 	}
 

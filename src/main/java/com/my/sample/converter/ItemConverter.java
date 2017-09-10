@@ -14,6 +14,7 @@ public class ItemConverter {
 		target.setPrice(source.getPrice());
 		target.setCreatedDate(source.getCreatedDate());
 		target.setModifiedDate(source.getModifiedDate());
+		target.setType(source.getType());
 	} 
 	
 	public static void reverse(ItemData source, Item target){
@@ -21,6 +22,7 @@ public class ItemConverter {
 		target.setCategory(new Category(source.getCategory()));
 		target.setTitle(source.getTitle());
 		target.setPrice(source.getPrice());
+		target.setType(source.getType());
 	}
 	
 }

@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 	public Long createOrder(OrderData orderData) {
 		Order order = new Order();
 		OrderConverter.reverse(orderData, order);
-		SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
 		order.setOrderNumber(findMaxOrderNumberForDate(sm.format(new Date())) + 1l);
 		order = orderRepository.save(order);
 		return order.getOrderNumber();

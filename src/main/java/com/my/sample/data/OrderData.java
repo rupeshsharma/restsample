@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.my.sample.enums.OrderStatus;
-
 public class OrderData implements Serializable {
 
 	/**
@@ -18,11 +15,20 @@ public class OrderData implements Serializable {
 	private Long id;
 
 	private Long orderNumber;
-	
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm a z")
-	private Date orderDate;
 
-	private OrderStatus status;
+	private String orderDate;
+	
+	private Date createdDate;
+
+	private String paymentType;
+
+	private String diningMode;
+
+	private UserData createdBy;
+
+	private String status;
+
+	private Integer discount;
 
 	private BigDecimal amount;
 
@@ -70,20 +76,60 @@ public class OrderData implements Serializable {
 		this.orderDetail = orderDetail;
 	}
 
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public OrderStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(OrderStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public String getDiningMode() {
+		return diningMode;
+	}
+
+	public void setDiningMode(String diningMode) {
+		this.diningMode = diningMode;
+	}
+
+	public UserData getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(UserData createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }

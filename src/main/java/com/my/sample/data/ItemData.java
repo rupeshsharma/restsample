@@ -24,8 +24,11 @@ public class ItemData implements Serializable {
 
 	private Long category;
 	
+	private String type;
+	
 	@JsonSerialize(using = CustomDateSerializer.class)
 	private Date createdDate;
+	
 	@JsonSerialize(using = CustomDateSerializer.class)
 	private Date modifiedDate;
 
@@ -83,6 +86,14 @@ public class ItemData implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

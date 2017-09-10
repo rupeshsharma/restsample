@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,18 +20,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.my.sample.enums.DiningMode;
-import com.my.sample.enums.OrderStatus;
-import com.my.sample.enums.PaymentType;
-
 @Entity
-@Table(name = "ORDER")
+@Table(name = "R_ORDER")
 public class Order implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5064224669903519343L;
+	private static final long serialVersionUID = 7564405074140685149L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,43 +37,38 @@ public class Order implements Serializable {
 	@Column(name = "ORDER_NUMBER")
 	private Long orderNumber;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ORDER_DATE")
-	private Date orderDate;
-	
-	@Enumerated(EnumType.STRING)
+	private String orderDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Date createdDate;
+
 	@Column(name = "PAYMENT_TYPE")
-	private PaymentType paymentType;
-	
-	@Enumerated(EnumType.STRING)
+	private String paymentType;
+
 	@Column(name = "DINING_MODE")
-	private DiningMode diningMode;
-	
+	private String diningMode;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CREATED_BY")
 	private User createdBy;
 
 	@Column(name = "STATUS")
-	private OrderStatus status;
-	
+	private String status;
+
 	@Column(name = "DISCOUNT")
 	private Integer discount;
 
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
-	
-	@Column(name = "CGST")
-	private BigDecimal cgst;
-	
-	@Column(name = "SGST")
-	private BigDecimal sgst;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER")
 	private Customer customer;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "ORDER_DETAIL_MAPPING", joinColumns = @JoinColumn(name = "ORDER_ID"), inverseJoinColumns = @JoinColumn(name = "ORDER_DETAIL_ID"))
+	@JoinTable(name = "R_ORDER_DETAIL_MAPPING", joinColumns = @JoinColumn(name = "ORDER_ID"), inverseJoinColumns = @JoinColumn(name = "ORDER_DETAIL_ID"))
 	@Column(name = "ORDER_DETAIL")
 	private List<OrderDetail> orderDetail;
 
@@ -148,7 +137,6 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-
 	public Integer getDiscount() {
 		return discount;
 	}
@@ -165,51 +153,43 @@ public class Order implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public BigDecimal getCgst() {
-		return cgst;
-	}
-
-	public void setCgst(BigDecimal cgst) {
-		this.cgst = cgst;
-	}
-
-	public BigDecimal getSgst() {
-		return sgst;
-	}
-
-	public void setSgst(BigDecimal sgst) {
-		this.sgst = sgst;
-	}
-
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
-	public PaymentType getPaymentType() {
+	public String getPaymentType() {
 		return paymentType;
 	}
 
-	public void setPaymentType(PaymentType paymentType) {
+	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
 
-	public DiningMode getDiningMode() {
+	public String getDiningMode() {
 		return diningMode;
 	}
 
-	public void setDiningMode(DiningMode diningMode) {
+	public void setDiningMode(String diningMode) {
 		this.diningMode = diningMode;
 	}
 
-	public OrderStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(OrderStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 }

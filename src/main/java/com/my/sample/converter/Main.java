@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		String formattedDate = formatter.format(new Date());
 		System.out.println(formattedDate);
 

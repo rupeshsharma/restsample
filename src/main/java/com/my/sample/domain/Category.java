@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "R_CATEGORY")
 public class Category implements Serializable {
 
 	/**

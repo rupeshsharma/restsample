@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "ITEM")
+@Table(name = "R_ITEM")
 public class Item implements Serializable {
 
 	/**
@@ -50,6 +50,9 @@ public class Item implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
+	
+	@Column(name = "TYPE")
+	private String type;
 	
 	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
 	private char status;
@@ -149,5 +152,13 @@ public class Item implements Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

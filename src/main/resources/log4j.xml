@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+	    <layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" 
+			value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+	    </layout>
+	</appender>
+ 
+	<!-- <appender name="file" class="org.apache.log4j.RollingFileAppender">
+	    <param name="append" value="true" />
+	    <param name="maxFileSize" value="20KB" />
+	    <param name="maxBackupIndex" value="20" />
+	    <param name="file" value="../logs/draco/hcl_draco.log" />
+	    <layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" 
+			value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+	    </layout>
+	</appender> -->
+
+	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="../logs/orbit/hcl_orbit.log" />
+		<param name="DatePattern" value=".yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MMM-dd HH:mm:ss,SSS} [%t] %c %x%n  %-5p %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- Application Loggers -->
+	<logger name="com.verizon.vdm">
+		<level value="info" />
+	</logger>
+	
+	<!-- 3rdparty Loggers  
+	<category name="org.springframework">
+	    <priority value="DEBUG" />
+	</category>
+
+	<category name="org.springframework.beans">
+	    <priority value="DEBUG" />
+	</category>
+	
+	<category name="org.springframework.web">
+	    <priority value="DEBUG" />
+	</category>
+	
+	<category name="org.springframework.security">
+	    <priority value="DEBUG" />
+	</category>
+	
+	<category
+	    name="org.springframework.beans.CachedIntrospectionResults">
+	    <priority value="DEBUG" />
+	</category>
+	
+	<category name="org.springframework.jdbc.core">
+	    <priority value="DEBUG" />
+	</category>
+	
+	<category
+	    name="org.springframework.transaction.support.TransactionSynchronizationManager">
+	    <priority value="DEBUG" />
+	</category>
+	-->
+	<!-- Root Logger -->
+	<root>
+		<level value="info" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+
+</log4j:configuration>
