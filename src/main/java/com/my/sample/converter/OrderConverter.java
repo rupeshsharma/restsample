@@ -9,13 +9,13 @@ import com.my.sample.data.CustomerData;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderDetailData;
 import com.my.sample.domain.Customer;
-import com.my.sample.domain.Order;
+import com.my.sample.domain.OrderDomain;
 import com.my.sample.domain.OrderDetail;
 import com.my.sample.enums.OrderStatus;
 
 public class OrderConverter {
 
-	public static void reverse(OrderData source, Order target) {
+	public static void reverse(OrderData source, OrderDomain target) {
 		target.setAmount(source.getAmount());
 		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
 		target.setOrderDate(sm.format(new Date()));
@@ -35,7 +35,7 @@ public class OrderConverter {
 		target.setOrderDetail(orderDetailList);
 	}
 
-	public static void convert(Order source, OrderData target, Boolean isFull) {
+	public static void convert(OrderDomain source, OrderData target, Boolean isFull) {
 		target.setId(source.getId());
 		target.setAmount(source.getAmount());
 		target.setOrderNumber(source.getOrderNumber());

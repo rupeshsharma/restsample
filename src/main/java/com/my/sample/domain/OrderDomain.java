@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "R_ORDER")
-public class Order implements Serializable {
+public class OrderDomain implements Serializable {
 
 	/**
 	 * 
@@ -72,16 +72,16 @@ public class Order implements Serializable {
 	@Column(name = "ORDER_DETAIL")
 	private List<OrderDetail> orderDetail;
 
-	public Order() {
+	public OrderDomain() {
 
 	}
 
-	public Order(Long id) {
+	public OrderDomain(Long id) {
 		this.id = id;
 	}
 
-	public Order(Long id, Long orderNumber, String orderDate, Date createdDate, String paymentType, String diningMode,
-			BigDecimal amount) {
+	public OrderDomain(Long id, Long orderNumber, String orderDate, Date createdDate, String paymentType, String diningMode,
+			BigDecimal amount, Customer customer) {
 		this.id = id;
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
@@ -89,6 +89,7 @@ public class Order implements Serializable {
 		this.paymentType = paymentType;
 		this.diningMode = diningMode;
 		this.amount = amount;
+		this.customer=customer;
 
 	}
 
@@ -140,7 +141,7 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		OrderDomain other = (OrderDomain) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

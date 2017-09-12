@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.my.sample.converter.OrderConverter;
 import com.my.sample.data.OrderData;
-import com.my.sample.domain.Order;
+import com.my.sample.domain.OrderDomain;
 import com.my.sample.repository.OrderDetailRepository;
 import com.my.sample.repository.OrderRepository;
 import com.my.sample.service.OrderService;
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Long createOrder(OrderData orderData) {
-		Order order = new Order();
+		OrderDomain order = new OrderDomain();
 		OrderConverter.reverse(orderData, order);
 		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
 		order.setOrderNumber(findMaxOrderNumberForDate(sm.format(new Date())) + 1l);
@@ -60,9 +60,9 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderData> getOrder() {
 		List<OrderData> orderDataList = new ArrayList<OrderData>();
-		List<Order> orderList = orderRepository.findAll();
+		List<OrderDomain> orderList = orderRepository.findAll();
 		OrderData orderData = null;
-		for (Order order : orderList) {
+		for (OrderDomain order : orderList) {
 			orderData = new OrderData();
 			OrderConverter.convert(order, orderData, Boolean.FALSE);
 			orderDataList.add(orderData);
@@ -74,9 +74,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderData> getOrderForCurrentDate() {
 		List<OrderData> orderDataList = new ArrayList<OrderData>();
 		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
-		List<Order> orderList = orderRepository.getOrderForCurrentDate(sm.format(new Date()));
+		List<OrderDomain> orderList = orderRepository.getOrderForCurrentDate(sm.format(new Date()));
 		OrderData orderData = null;
-		for (Order order : orderList) {
+		for (OrderDomain order : orderList) {
 			orderData = new OrderData();
 			OrderConverter.convert(order, orderData, Boolean.FALSE);
 			orderDataList.add(orderData);
@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderData getOrderDetailById(Long id) {
-		Order order = orderRepository.findOne(id);
+		OrderDomain order = orderRepository.findOne(id);
 		OrderData orderData = new OrderData();
 		OrderConverter.convert(order, orderData, Boolean.TRUE);
 		return orderData;
