@@ -50,6 +50,10 @@ public class Customer implements Serializable {
 	public Customer(Long id) {
 		this.id = id;
 	}
+	
+	public Customer(Long id,String name) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;

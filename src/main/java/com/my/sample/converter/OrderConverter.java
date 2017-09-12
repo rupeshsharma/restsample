@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.my.sample.data.CustomerData;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderDetailData;
 import com.my.sample.domain.Customer;
@@ -23,7 +24,7 @@ public class OrderConverter {
 		target.setDiningMode(source.getDiningMode());
 		target.setDiscount(source.getDiscount());
 		target.setPaymentType(source.getPaymentType());
-//		target.setCreatedBy(new User(source.getCreatedBy().getId()));
+		// target.setCreatedBy(new User(source.getCreatedBy().getId()));
 		List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
 		OrderDetail orderDetail = null;
 		for (OrderDetailData orderDetailData : source.getOrderDetail()) {
@@ -34,7 +35,7 @@ public class OrderConverter {
 		target.setOrderDetail(orderDetailList);
 	}
 
-	public static void convert(Order source, OrderData target) {
+	public static void convert(Order source, OrderData target, Boolean isFull) {
 		target.setId(source.getId());
 		target.setAmount(source.getAmount());
 		target.setOrderNumber(source.getOrderNumber());
@@ -42,19 +43,23 @@ public class OrderConverter {
 		target.setDiningMode(source.getDiningMode());
 		target.setDiscount(source.getDiscount());
 		target.setPaymentType(source.getPaymentType());
-		List<OrderDetailData> orderDetailDataList = new ArrayList<OrderDetailData>();
-		OrderDetailData orderDetailData = null;
-		for(OrderDetail orderDetail : source.getOrderDetail()){
-			orderDetailData = new OrderDetailData();
-			OrderDetailConverter.convert(orderDetail,orderDetailData);
-			orderDetailDataList.add(orderDetailData);
+		if (isFull) {
+			List<OrderDetailData> orderDetailDataList = new ArrayList<OrderDetailData>();
+			OrderDetailData orderDetailData = null;
+			for (OrderDetail orderDetail : source.getOrderDetail()) {
+				orderDetailData = new OrderDetailData();
+				OrderDetailConverter.convert(orderDetail, orderDetailData);
+				orderDetailDataList.add(orderDetailData);
+			}
+			target.setOrderDetail(orderDetailDataList);
 		}
 		target.setCreatedDate(source.getCreatedDate());
 		target.setOrderDate(source.getOrderDate());
-		target.setOrderDetail(orderDetailDataList);
-//		UserData userData = new UserData();
-//		UserConverter.convert(source.getCreatedBy(), userData);
-//		target.setCreatedBy(userData);
+		Customer customer = source.getCustomer();
+		target.setCustomer(new CustomerData(customer.getId(), customer.getName(), customer.getMobile()));
+		// UserData userData = new UserData();
+		// UserConverter.convert(source.getCreatedBy(), userData);
+		// target.setCreatedBy(userData);
 	}
 
 }

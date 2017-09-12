@@ -21,6 +21,15 @@ public class CustomerData implements Serializable {
 
 	private String email;
 
+	public CustomerData() {
+	}
+
+	public CustomerData(Long id, String name, String mobile) {
+		this.id = id;
+		this.name = name;
+		this.mobile = mobile;
+	}
+
 	@JsonSerialize(using = CustomDateSerializer.class)
 	private Date createdDate;
 	@JsonSerialize(using = CustomDateSerializer.class)

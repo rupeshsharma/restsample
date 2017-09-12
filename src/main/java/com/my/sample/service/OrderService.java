@@ -10,4 +10,8 @@ public interface OrderService {
 
 	List<OrderData> getOrder();
 
+	List<OrderData> getOrderForCurrentDate();
+
+	OrderData getOrderDetailById(Long id);
+
 }

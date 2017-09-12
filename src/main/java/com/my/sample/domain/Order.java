@@ -72,6 +72,26 @@ public class Order implements Serializable {
 	@Column(name = "ORDER_DETAIL")
 	private List<OrderDetail> orderDetail;
 
+	public Order() {
+
+	}
+
+	public Order(Long id) {
+		this.id = id;
+	}
+
+	public Order(Long id, Long orderNumber, String orderDate, Date createdDate, String paymentType, String diningMode,
+			BigDecimal amount) {
+		this.id = id;
+		this.orderNumber = orderNumber;
+		this.orderDate = orderDate;
+		this.createdDate = createdDate;
+		this.paymentType = paymentType;
+		this.diningMode = diningMode;
+		this.amount = amount;
+
+	}
+
 	public Long getId() {
 		return id;
 	}

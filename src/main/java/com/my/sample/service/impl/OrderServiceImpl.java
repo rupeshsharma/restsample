@@ -61,13 +61,35 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderData> getOrder() {
 		List<OrderData> orderDataList = new ArrayList<OrderData>();
 		List<Order> orderList = orderRepository.findAll();
-		OrderData orderData=null;
-		for(Order order : orderList){
+		OrderData orderData = null;
+		for (Order order : orderList) {
 			orderData = new OrderData();
-			OrderConverter.convert(order,orderData);
+			OrderConverter.convert(order, orderData, Boolean.FALSE);
 			orderDataList.add(orderData);
 		}
 		return orderDataList;
+	}
+
+	@Override
+	public List<OrderData> getOrderForCurrentDate() {
+		List<OrderData> orderDataList = new ArrayList<OrderData>();
+		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
+		List<Order> orderList = orderRepository.getOrderForCurrentDate(sm.format(new Date()));
+		OrderData orderData = null;
+		for (Order order : orderList) {
+			orderData = new OrderData();
+			OrderConverter.convert(order, orderData, Boolean.FALSE);
+			orderDataList.add(orderData);
+		}
+		return orderDataList;
+	}
+
+	@Override
+	public OrderData getOrderDetailById(Long id) {
+		Order order = orderRepository.findOne(id);
+		OrderData orderData = new OrderData();
+		OrderConverter.convert(order, orderData, Boolean.TRUE);
+		return orderData;
 	}
 
 }
