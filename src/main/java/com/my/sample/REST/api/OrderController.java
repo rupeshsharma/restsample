@@ -48,4 +48,9 @@ public class OrderController {
 	public ResponseEntity<?> getOrderDetailById(@PathVariable Long id) throws Exception {
 		return new ResponseEntity<>(orderService.getOrderDetailById(id), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/review/{orderDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getOrderReviewDataForDate(@PathVariable String orderDate) throws Exception {
+		return new ResponseEntity<>(orderService.getOrderReviewDataForDate(orderDate), HttpStatus.OK);
+	}
 }
