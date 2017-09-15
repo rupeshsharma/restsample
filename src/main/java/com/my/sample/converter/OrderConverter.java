@@ -1,6 +1,5 @@
 package com.my.sample.converter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,16 +8,19 @@ import com.my.sample.data.CustomerData;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderDetailData;
 import com.my.sample.domain.Customer;
-import com.my.sample.domain.OrderDomain;
 import com.my.sample.domain.OrderDetail;
+import com.my.sample.domain.OrderDomain;
 import com.my.sample.enums.OrderStatus;
 
 public class OrderConverter {
 
 	public static void reverse(OrderData source, OrderDomain target) {
-		target.setAmount(source.getAmount());
-		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
-		target.setOrderDate(sm.format(new Date()));
+		target.setGrandTotal(source.getGrandTotal());
+		target.setTotal(source.getTotal());
+		target.setAfterDiscountTotal(source.getAfterDiscountTotal());
+		target.setCgst(source.getCgst());
+		target.setSgst(source.getSgst());
+		target.setOrderDate(new Date());
 		target.setStatus(OrderStatus.PROCESSING.getValue());
 		target.setCustomer(new Customer(source.getCustomer().getId()));
 		target.setDiningMode(source.getDiningMode());
@@ -37,7 +39,11 @@ public class OrderConverter {
 
 	public static void convert(OrderDomain source, OrderData target, Boolean isFull) {
 		target.setId(source.getId());
-		target.setAmount(source.getAmount());
+		target.setGrandTotal(source.getGrandTotal());
+		target.setTotal(source.getTotal());
+		target.setAfterDiscountTotal(source.getAfterDiscountTotal());
+		target.setCgst(source.getCgst());
+		target.setSgst(source.getSgst());
 		target.setOrderNumber(source.getOrderNumber());
 		target.setStatus(source.getStatus());
 		target.setDiningMode(source.getDiningMode());

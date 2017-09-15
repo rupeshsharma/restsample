@@ -34,11 +34,15 @@ public class Customer implements Serializable {
 
 	@Column(name = "EMAIL")
 	private String email;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
-	
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "LAST_VISITED")
+	private Date lastVisited;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
@@ -50,8 +54,8 @@ public class Customer implements Serializable {
 	public Customer(Long id) {
 		this.id = id;
 	}
-	
-	public Customer(Long id,String name) {
+
+	public Customer(Long id, String name) {
 		this.id = id;
 	}
 
@@ -126,5 +130,13 @@ public class Customer implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public Date getLastVisited() {
+		return lastVisited;
+	}
+
+	public void setLastVisited(Date lastVisited) {
+		this.lastVisited = lastVisited;
 	}
 }

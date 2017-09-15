@@ -1,5 +1,7 @@
 package com.my.sample.service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.my.sample.data.OrderData;
@@ -15,6 +17,14 @@ public interface OrderService {
 
 	OrderData getOrderDetailById(Long id);
 
-	OrderReviewData getOrderReviewDataForDate(String orderDate);
+	OrderReviewData getOrderReviewDataForDate(Date orderDate);
+
+	List<OrderData> searchOrderHistoryInRange(Date fromOrderDate, Date toOrderDate);
+
+	Long getTotalOrderInRange(Date fromOrderDate, Date toOrderDate);
+
+	Long getTotalItemInRange(Date fromOrderDate, Date toOrderDate);
+
+	BigDecimal getTotalCollectionInRange(Date fromOrderDate, Date toOrderDate);
 
 }

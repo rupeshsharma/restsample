@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.my.sample.config.DefaultDateTimeSerializer;
+
 public class OrderDetailData implements Serializable {
 	/**
 	 * 
@@ -18,6 +21,7 @@ public class OrderDetailData implements Serializable {
 
 	private BigDecimal unitPrice;
 
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date createdDate;
 
 	public Long getId() {

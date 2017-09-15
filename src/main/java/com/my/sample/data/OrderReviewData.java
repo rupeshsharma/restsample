@@ -22,6 +22,11 @@ public class OrderReviewData implements Serializable {
 		this.totalCollection = totalCollection;
 		this.totalItemsSold = totalItemsSold;
 	}
+	
+	public OrderReviewData(Long totalOrder, BigDecimal totalCollection) {
+		this.totalOrder = totalOrder;
+		this.totalCollection = totalCollection;
+	}
 
 	public Long getTotalOrder() {
 		return totalOrder;

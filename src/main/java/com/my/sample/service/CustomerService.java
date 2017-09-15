@@ -6,5 +6,6 @@ public interface CustomerService {
 	
 	CustomerData getOrCreateCustomer(String mobile);
 	CustomerData updateCustomer(CustomerData customerData);
+	void updateLastVisitedDate(Long id);
 
 }

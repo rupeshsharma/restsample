@@ -33,9 +33,15 @@ public class CustomerController {
 	public ResponseEntity<?> getOrCreateCustomer(@PathVariable String mobile) {
 		return new ResponseEntity<>(customerService.getOrCreateCustomer(mobile), HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCustomer(@RequestBody CustomerData customerData) {
 		return new ResponseEntity<>(customerService.updateCustomer(customerData), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}/lastVisit", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateLastVisitedDate(Long id) {
+		customerService.updateLastVisitedDate(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -1,6 +1,9 @@
 package com.my.sample.REST.api;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +53,27 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/review/{orderDate}", method = RequestMethod.GET)
-	public ResponseEntity<?> getOrderReviewDataForDate(@PathVariable String orderDate) throws Exception {
+	public ResponseEntity<?> getOrderReviewDataForDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date orderDate) throws Exception {
 		return new ResponseEntity<>(orderService.getOrderReviewDataForDate(orderDate), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/search/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> searchOrderHistoryInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
+		return new ResponseEntity<>(orderService.searchOrderHistoryInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/total/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getTotalOrderInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
+		return new ResponseEntity<>(orderService.getTotalOrderInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/total/item/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getTotalItemInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
+		return new ResponseEntity<>(orderService.getTotalItemInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/total/collection/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getTotalCollectionInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
+		return new ResponseEntity<>(orderService.getTotalCollectionInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
 	}
 }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.CustomDateSerializer;
+import com.my.sample.config.DefaultDateTimeSerializer;
 
 public class ItemData implements Serializable {
 
@@ -26,10 +26,10 @@ public class ItemData implements Serializable {
 	
 	private String type;
 	
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date createdDate;
 	
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date modifiedDate;
 
 	public Long getId() {

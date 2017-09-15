@@ -37,8 +37,9 @@ public class OrderDomain implements Serializable {
 	@Column(name = "ORDER_NUMBER")
 	private Long orderNumber;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "ORDER_DATE")
-	private String orderDate;
+	private Date orderDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -60,8 +61,20 @@ public class OrderDomain implements Serializable {
 	@Column(name = "DISCOUNT")
 	private Integer discount;
 
-	@Column(name = "AMOUNT")
-	private BigDecimal amount;
+	@Column(name = "GRAND_TOTAL")
+	private BigDecimal grandTotal;
+
+	@Column(name = "CGST")
+	private BigDecimal cgst;
+
+	@Column(name = "SGST")
+	private BigDecimal sgst;
+
+	@Column(name = "TOTAL")
+	private BigDecimal total;
+
+	@Column(name = "AFT_DISC_TOTAL")
+	private BigDecimal afterDiscountTotal;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER")
@@ -80,16 +93,16 @@ public class OrderDomain implements Serializable {
 		this.id = id;
 	}
 
-	public OrderDomain(Long id, Long orderNumber, String orderDate, Date createdDate, String paymentType, String diningMode,
-			BigDecimal amount, Customer customer) {
+	public OrderDomain(Long id, Long orderNumber, Date orderDate, Date createdDate, String paymentType,
+			String diningMode, BigDecimal grandTotal, Customer customer) {
 		this.id = id;
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
 		this.createdDate = createdDate;
 		this.paymentType = paymentType;
 		this.diningMode = diningMode;
-		this.amount = amount;
-		this.customer=customer;
+		this.grandTotal = grandTotal;
+		this.customer = customer;
 
 	}
 
@@ -107,14 +120,6 @@ public class OrderDomain implements Serializable {
 
 	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 
 	public List<OrderDetail> getOrderDetail() {
@@ -174,11 +179,11 @@ public class OrderDomain implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public String getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -212,5 +217,45 @@ public class OrderDomain implements Serializable {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public BigDecimal getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(BigDecimal grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public BigDecimal getAfterDiscountTotal() {
+		return afterDiscountTotal;
+	}
+
+	public void setAfterDiscountTotal(BigDecimal afterDiscountTotal) {
+		this.afterDiscountTotal = afterDiscountTotal;
+	}
+
+	public BigDecimal getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(BigDecimal cgst) {
+		this.cgst = cgst;
+	}
+
+	public BigDecimal getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(BigDecimal sgst) {
+		this.sgst = sgst;
 	}
 }

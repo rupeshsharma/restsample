@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.my.sample.config.DefaultDateSerializer;
+import com.my.sample.config.DefaultDateTimeSerializer;
+
 public class OrderData implements Serializable {
 
 	/**
@@ -16,8 +20,10 @@ public class OrderData implements Serializable {
 
 	private Long orderNumber;
 
-	private String orderDate;
-	
+	@JsonSerialize(using = DefaultDateSerializer.class)
+	private Date orderDate;
+
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date createdDate;
 
 	private String paymentType;
@@ -30,7 +36,15 @@ public class OrderData implements Serializable {
 
 	private Integer discount;
 
-	private BigDecimal amount;
+	private BigDecimal grandTotal;
+
+	private BigDecimal cgst;
+	
+	private BigDecimal sgst;
+
+	private BigDecimal total;
+
+	private BigDecimal afterDiscountTotal;
 
 	private CustomerData customer;
 
@@ -50,14 +64,6 @@ public class OrderData implements Serializable {
 
 	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 
 	public CustomerData getCustomer() {
@@ -116,11 +122,11 @@ public class OrderData implements Serializable {
 		this.discount = discount;
 	}
 
-	public String getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -130,6 +136,46 @@ public class OrderData implements Serializable {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public BigDecimal getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(BigDecimal grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public BigDecimal getAfterDiscountTotal() {
+		return afterDiscountTotal;
+	}
+
+	public void setAfterDiscountTotal(BigDecimal afterDiscountTotal) {
+		this.afterDiscountTotal = afterDiscountTotal;
+	}
+
+	public BigDecimal getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(BigDecimal cgst) {
+		this.cgst = cgst;
+	}
+
+	public BigDecimal getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(BigDecimal sgst) {
+		this.sgst = sgst;
 	}
 
 }

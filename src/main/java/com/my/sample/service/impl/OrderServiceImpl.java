@@ -1,6 +1,6 @@
 package com.my.sample.service.impl;
 
-import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,13 +44,12 @@ public class OrderServiceImpl implements OrderService {
 	public Long createOrder(OrderData orderData) {
 		OrderDomain order = new OrderDomain();
 		OrderConverter.reverse(orderData, order);
-		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
-		order.setOrderNumber(findMaxOrderNumberForDate(sm.format(new Date())) + 1l);
+		order.setOrderNumber(findMaxOrderNumberForDate(new Date()) + 1l);
 		order = orderRepository.save(order);
 		return order.getOrderNumber();
 	}
 
-	private Long findMaxOrderNumberForDate(String orderDate) {
+	private Long findMaxOrderNumberForDate(Date orderDate) {
 		Long orderNumber = orderRepository.findMaxOrderNumberForDate(orderDate);
 		if (orderNumber == null) {
 			orderNumber = 0l;
@@ -74,8 +73,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderData> getOrderForCurrentDate() {
 		List<OrderData> orderDataList = new ArrayList<OrderData>();
-		SimpleDateFormat sm = new SimpleDateFormat("dd-MM-yyyy");
-		List<OrderDomain> orderList = orderRepository.getOrderForCurrentDate(sm.format(new Date()));
+		List<OrderDomain> orderList = orderRepository.getOrderForCurrentDate(new Date());
 		OrderData orderData = null;
 		for (OrderDomain order : orderList) {
 			orderData = new OrderData();
@@ -94,8 +92,40 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderReviewData getOrderReviewDataForDate(String orderDate) {
-		return orderRepository.getOrderReviewData(orderDate);
+	public OrderReviewData getOrderReviewDataForDate(Date orderDate) {
+		OrderReviewData orderReviewData = orderRepository.getOrderReviewData(orderDate);
+		if (orderReviewData.getTotalOrder() != null) {
+			orderReviewData.setTotalItemsSold(orderDetailRepsitory.getTotalItemSoldForDate(orderDate));
+		}
+		return orderReviewData;
+	}
+
+	@Override
+	public List<OrderData> searchOrderHistoryInRange(Date fromOrderDate, Date toOrderDate) {
+		List<OrderData> orderDataList = new ArrayList<OrderData>();
+		List<OrderDomain> orderList = orderRepository.searchOrderHistoryInRange(fromOrderDate, toOrderDate);
+		OrderData orderData = null;
+		for (OrderDomain order : orderList) {
+			orderData = new OrderData();
+			OrderConverter.convert(order, orderData, Boolean.FALSE);
+			orderDataList.add(orderData);
+		}
+		return orderDataList;
+	}
+
+	@Override
+	public Long getTotalOrderInRange(Date fromOrderDate, Date toOrderDate) {
+		return orderRepository.getTotalOrderInRange(fromOrderDate,toOrderDate);
+	}
+
+	@Override
+	public Long getTotalItemInRange(Date fromOrderDate, Date toOrderDate) {
+		return orderDetailRepsitory.getTotalItemInRange(fromOrderDate, toOrderDate);
+	}
+	
+	@Override
+	public BigDecimal getTotalCollectionInRange(Date fromOrderDate, Date toOrderDate){
+		return orderRepository.getTotalCollectionInRange(fromOrderDate,toOrderDate);
 	}
 
 }

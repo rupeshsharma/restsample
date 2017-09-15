@@ -8,6 +8,7 @@ public class CustomerConverter {
 	public static void convert(Customer source, CustomerData target){
 		target.setEmail(source.getEmail());
 		target.setId(source.getId());
+		target.setLastVisited(source.getLastVisited());
 		target.setMobile(source.getMobile());
 		target.setName(source.getName());
 		target.setCreatedDate(source.getCreatedDate());

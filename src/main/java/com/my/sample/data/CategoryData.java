@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.CustomDateSerializer;
+import com.my.sample.config.DefaultDateTimeSerializer;
 
 public class CategoryData implements Serializable {
 	/**
@@ -15,9 +15,9 @@ public class CategoryData implements Serializable {
 	private static final long serialVersionUID = -2606525992694526442L;
 	private Long id;
 	private String title;
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date createdDate;
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date modifiedDate;
 	private Set<ItemData> items = new HashSet<ItemData>();
 

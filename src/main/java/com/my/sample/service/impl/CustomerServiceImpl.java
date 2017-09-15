@@ -15,8 +15,8 @@ import com.my.sample.service.CustomerService;
 
 @Service("customerService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-public class CustomerServiceImpl implements CustomerService{
-	
+public class CustomerServiceImpl implements CustomerService {
+
 	private final CustomerRepository customerRepository;
 
 	@Autowired
@@ -33,14 +33,16 @@ public class CustomerServiceImpl implements CustomerService{
 	public CustomerData getOrCreateCustomer(String mobile) {
 		Customer customer = customerRepository.findCustomerByMobile(mobile);
 		CustomerData customerData = new CustomerData();
-		if(customer == null){
+		if (customer == null) {
 			customer = new Customer();
-			customer.setCreatedDate(new Date());
+			Date date = new Date();
+			customer.setCreatedDate(date);
+			customer.setLastVisited(date);
 			customer.setMobile(mobile);
 			customer = customerRepository.save(customer);
 		}
 		CustomerConverter.convert(customer, customerData);
-		
+
 		return customerData;
 	}
 
@@ -53,9 +55,12 @@ public class CustomerServiceImpl implements CustomerService{
 		CustomerConverter.convert(customer, customerData);
 		return customerData;
 	}
-	
-	
-	
-	
+
+	@Override
+	public void updateLastVisitedDate(Long id) {
+		Customer customer = customerRepository.findOne(id);
+		customer.setLastVisited(new Date());
+		customerRepository.save(customer);
+	}
 
 }

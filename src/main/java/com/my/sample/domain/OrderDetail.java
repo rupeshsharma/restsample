@@ -40,7 +40,7 @@ public class OrderDetail implements Serializable {
 	@Column(name = "UNIT_PRICE")
 	private BigDecimal unitPrice;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 

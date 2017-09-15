@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.CustomDateSerializer;
+import com.my.sample.config.DefaultDateTimeSerializer;
 
 public class CustomerData implements Serializable {
 
@@ -18,6 +18,8 @@ public class CustomerData implements Serializable {
 	private String name;
 
 	private String mobile;
+	
+	private Date lastVisited;
 
 	private String email;
 
@@ -30,9 +32,9 @@ public class CustomerData implements Serializable {
 		this.mobile = mobile;
 	}
 
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date createdDate;
-	@JsonSerialize(using = CustomDateSerializer.class)
+	@JsonSerialize(using = DefaultDateTimeSerializer.class)
 	private Date modifiedDate;
 
 	public Long getId() {
@@ -81,6 +83,14 @@ public class CustomerData implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public Date getLastVisited() {
+		return lastVisited;
+	}
+
+	public void setLastVisited(Date lastVisited) {
+		this.lastVisited = lastVisited;
 	}
 
 }
