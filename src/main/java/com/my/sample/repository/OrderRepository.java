@@ -36,4 +36,7 @@ public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
 	BigDecimal getTotalCollectionInRange(@Param("fromOrderDate") Date fromOrderDate,
 			@Param("toOrderDate") Date toOrderDate);
 
+	@Query("SELECT New OrderDomain(o.id, o.orderNumber, o.orderDate, o.createdDate, o.paymentType, o.diningMode, o.grandTotal, o.customer) from OrderDomain o where o.customer.id = :id")
+	List<OrderDomain> getOrderHistoryForCustomer(@Param("id") Long id);
+
 }

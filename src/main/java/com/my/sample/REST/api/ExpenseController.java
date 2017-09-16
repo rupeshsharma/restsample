@@ -41,13 +41,13 @@ public class ExpenseController {
 		return new ResponseEntity<>(expenseService.createOrUpdateExpense(expenseData), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/search/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
-	public ResponseEntity<?> searchExpenseInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
-		return new ResponseEntity<>(expenseService.searchExpenseInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
+	@RequestMapping(value = "/search/{fromExpenseDate}/{toExpenseDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> searchExpenseInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromExpenseDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toExpenseDate) throws Exception {
+		return new ResponseEntity<>(expenseService.searchExpenseInRange(fromExpenseDate,toExpenseDate), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/total/{fromOrderDate}/{toOrderDate}", method = RequestMethod.GET)
-	public ResponseEntity<?> getTotalExpenseInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
-		return new ResponseEntity<>(expenseService.getTotalExpenseInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
+	@RequestMapping(value = "/total/{fromExpenseDate}/{toExpenseDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getTotalExpenseInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromExpenseDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toExpenseDate) throws Exception {
+		return new ResponseEntity<>(expenseService.getTotalExpenseInRange(fromExpenseDate,toExpenseDate), HttpStatus.OK);
 	}
 }

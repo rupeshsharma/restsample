@@ -12,8 +12,8 @@ public interface ExpenseService {
 
 	ExpenseData createOrUpdateExpense(ExpenseData expenseData);
 
-	List<ExpenseData> searchExpenseInRange(Date fromOrderDate, Date toOrderDate);
+	List<ExpenseData> searchExpenseInRange(Date fromExpenseDate, Date toExpenseDate);
 
-	BigDecimal getTotalExpenseInRange(Date fromOrderDate, Date toOrderDate);
+	BigDecimal getTotalExpenseInRange(Date fromExpenseDate, Date toExpenseDate);
 
 }

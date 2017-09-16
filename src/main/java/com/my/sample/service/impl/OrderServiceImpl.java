@@ -128,4 +128,17 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.getTotalCollectionInRange(fromOrderDate,toOrderDate);
 	}
 
+	@Override
+	public List<OrderData> getOrderHistoryForCustomer(Long id) {
+		List<OrderData> orderDataList = new ArrayList<OrderData>();
+		List<OrderDomain> orderList = orderRepository.getOrderHistoryForCustomer(id);
+		OrderData orderData = null;
+		for (OrderDomain order : orderList) {
+			orderData = new OrderData();
+			OrderConverter.convert(order, orderData, Boolean.FALSE);
+			orderDataList.add(orderData);
+		}
+		return orderDataList;
+	}
+
 }

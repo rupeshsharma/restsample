@@ -27,4 +27,6 @@ public interface OrderService {
 
 	BigDecimal getTotalCollectionInRange(Date fromOrderDate, Date toOrderDate);
 
+	List<OrderData> getOrderHistoryForCustomer(Long id);
+
 }

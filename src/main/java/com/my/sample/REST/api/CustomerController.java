@@ -1,6 +1,9 @@
 package com.my.sample.REST.api;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +43,13 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/{id}/lastVisit", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateLastVisitedDate(Long id) {
+	public ResponseEntity<?> updateLastVisitedDate(@PathVariable Long id) {
 		customerService.updateLastVisitedDate(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/visitBefore/{lastVisitedDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getCustomerVisitedBeforeDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date lastVisitedDate) {
+		return new ResponseEntity<>(customerService.getCustomerVisitedBeforeDate(lastVisitedDate), HttpStatus.OK);
+	} 
 }

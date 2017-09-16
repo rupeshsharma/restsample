@@ -15,12 +15,12 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	@Query("SELECT ex from Expense ex where ex.dateOfExpense = :dateOfExpense")
 	List<Expense> getExpenseForDate(@Param("dateOfExpense") Date dateOfExpense);
 
-	@Query("SELECT ex from Expense ex where ex.dateOfExpense BETWEEN :fromOrderDate AND :toOrderDate")
-	List<Expense> searchExpenseInRange(@Param("fromOrderDate") Date fromOrderDate,
-			@Param("toOrderDate") Date toOrderDate);
+	@Query("SELECT ex from Expense ex where ex.dateOfExpense BETWEEN :fromExpenseDate AND :toExpenseDate")
+	List<Expense> searchExpenseInRange(@Param("fromExpenseDate") Date fromExpenseDate,
+			@Param("toExpenseDate") Date toExpenseDate);
 
-	@Query("SELECT SUM(ex.amount) from Expense ex where ex.dateOfExpense BETWEEN :fromOrderDate AND :toOrderDate")
-	BigDecimal getTotalExpenseInRange(@Param("fromOrderDate") Date fromOrderDate,
-			@Param("toOrderDate") Date toOrderDate);
+	@Query("SELECT SUM(ex.amount) from Expense ex where ex.dateOfExpense BETWEEN :fromExpenseDate AND :toExpenseDate")
+	BigDecimal getTotalExpenseInRange(@Param("fromExpenseDate") Date fromExpenseDate,
+			@Param("toExpenseDate") Date toExpenseDate);
 
 }

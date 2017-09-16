@@ -1,6 +1,8 @@
 package com.my.sample.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,19 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findOne(id);
 		customer.setLastVisited(new Date());
 		customerRepository.save(customer);
+	}
+
+	@Override
+	public List<CustomerData> getCustomerVisitedBeforeDate(Date lastVisitedDate) {
+		List<CustomerData> customerDataList = new ArrayList<CustomerData>();
+		List<Customer> customerList = customerRepository.getCustomerVisitedBeforeDate(lastVisitedDate);
+		CustomerData customerData = null;
+		for (Customer customer : customerList) {
+			customerData = new CustomerData();
+			CustomerConverter.convert(customer, customerData);
+			customerDataList.add(customerData);
+		}
+		return customerDataList;
 	}
 
 }

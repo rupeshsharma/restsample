@@ -76,4 +76,9 @@ public class OrderController {
 	public ResponseEntity<?> getTotalCollectionInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromOrderDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toOrderDate) throws Exception {
 		return new ResponseEntity<>(orderService.getTotalCollectionInRange(fromOrderDate,toOrderDate), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/history/customer/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getOrderHistoryForCustomer(@PathVariable Long id) throws Exception {
+		return new ResponseEntity<>(orderService.getOrderHistoryForCustomer(id), HttpStatus.OK);
+	}
 }

@@ -63,9 +63,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public List<ExpenseData> searchExpenseInRange(Date fromOrderDate, Date toOrderDate) {
+	public List<ExpenseData> searchExpenseInRange(Date fromExpenseDate, Date toExpenseDate) {
 		List<ExpenseData> expenseListData = new ArrayList<ExpenseData>();
-		List<Expense> expenseList = expenseRepository.searchExpenseInRange(fromOrderDate, toOrderDate);
+		List<Expense> expenseList = expenseRepository.searchExpenseInRange(fromExpenseDate, toExpenseDate);
 		ExpenseData expenseData = null;
 		for (Expense expense : expenseList) {
 			expenseData = new ExpenseData();
@@ -76,8 +76,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public BigDecimal getTotalExpenseInRange(Date fromOrderDate, Date toOrderDate) {
-		return expenseRepository.getTotalExpenseInRange(fromOrderDate, toOrderDate);
+	public BigDecimal getTotalExpenseInRange(Date fromExpenseDate, Date toExpenseDate) {
+		return expenseRepository.getTotalExpenseInRange(fromExpenseDate, toExpenseDate);
 	}
 
 }
