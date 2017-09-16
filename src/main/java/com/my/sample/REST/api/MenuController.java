@@ -1,6 +1,9 @@
 package com.my.sample.REST.api;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +19,9 @@ import com.my.sample.service.MenuService;
 @RestController
 @RequestMapping("/api/menu")
 public class MenuController {
-	
+
 	private final MenuService menuService;
-	
+
 	@Autowired
 	public MenuController(MenuService menuService) {
 		super();
@@ -29,59 +32,60 @@ public class MenuController {
 
 		this.menuService = menuService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getMenu() throws Exception {
-		return new ResponseEntity<>(menuService.getMenu(),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.getMenu(), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/category", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	public ResponseEntity<?> getCategory() throws Exception {
-		return new ResponseEntity<>(menuService.getCategory(),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.getCategory(), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/category", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/category", method = RequestMethod.POST)
 	public ResponseEntity<?> addCategory(@RequestBody CategoryData categoryData) throws Exception {
-		return new ResponseEntity<>(menuService.addCategory(categoryData),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.addCategory(categoryData), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/category/{id}", method = RequestMethod.DELETE)
+
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCategory(@PathVariable Long id) throws Exception {
-		return new ResponseEntity<>(menuService.deleteCategory(id),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.deleteCategory(id), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/category", method = RequestMethod.PUT)
+
+	@RequestMapping(value = "/category", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCategory(@RequestBody CategoryData categoryData) throws Exception {
-		return new ResponseEntity<>(menuService.updateCategory(categoryData),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.updateCategory(categoryData), HttpStatus.OK);
 	}
-	 
-	@RequestMapping(value="/{id}/item", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{id}/item", method = RequestMethod.GET)
 	public ResponseEntity<?> getItemsForCategory(@PathVariable Long id) throws Exception {
-		return new ResponseEntity<>(menuService.getItemByCategory(id),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.getItemByCategory(id), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/item", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/item", method = RequestMethod.POST)
 	public ResponseEntity<?> addItemForCategory(@RequestBody ItemData itemData) throws Exception {
-		return new ResponseEntity<>(menuService.addItem(itemData),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.addItem(itemData), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/item/{id}", method = RequestMethod.DELETE)
+
+	@RequestMapping(value = "/item/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> removeItemFromCategory(@PathVariable Long id) throws Exception {
-		return new ResponseEntity<>(menuService.removeItem(id),
-				HttpStatus.OK);
+		return new ResponseEntity<>(menuService.removeItem(id), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/item", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateItem(@RequestBody ItemData itemData) throws Exception {
+		return new ResponseEntity<>(menuService.updateItem(itemData), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/wholeItemGraph", method = RequestMethod.GET)
+	public ResponseEntity<?> getWholeItemGraphData() throws Exception {
+		return new ResponseEntity<>(menuService.getWholeItemGraphData(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/item", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateItem(@RequestBody ItemData itemData) throws Exception {
-		return new ResponseEntity<>(menuService.updateItem(itemData),
-				HttpStatus.OK);
+	@RequestMapping(value = "/wholeItemGraph/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public ResponseEntity<?> getWholeItemGraphDataInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toDate) throws Exception {
+		return new ResponseEntity<>(menuService.getWholeItemGraphDataInRange(fromDate,toDate), HttpStatus.OK);
 	}
 
 }

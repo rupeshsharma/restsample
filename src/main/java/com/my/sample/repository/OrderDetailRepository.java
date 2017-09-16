@@ -16,4 +16,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 	@Query("SELECT SUM(od.quantity) from OrderDetail od where od.createdDate BETWEEN :fromOrderDate AND :toOrderDate")
 	Long getTotalItemInRange(@Param("fromOrderDate") Date fromOrderDate, @Param("toOrderDate") Date toOrderDate);
 
+	@Query("SELECT SUM(od.quantity) from OrderDetail od where od.item.id = :id")
+	Long getTotalItemSoldById(@Param("id") Long id);
+
+	@Query("SELECT SUM(od.quantity) from OrderDetail od where od.item.id = :id AND od.createdDate BETWEEN :fromOrderDate AND :toOrderDate")
+	Long getTotalItemSoldByIdInRange(@Param("id") Long id, @Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
 }

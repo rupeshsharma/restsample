@@ -115,17 +115,17 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Long getTotalOrderInRange(Date fromOrderDate, Date toOrderDate) {
-		return orderRepository.getTotalOrderInRange(fromOrderDate,toOrderDate);
+		return orderRepository.getTotalOrderInRange(fromOrderDate, toOrderDate);
 	}
 
 	@Override
 	public Long getTotalItemInRange(Date fromOrderDate, Date toOrderDate) {
 		return orderDetailRepsitory.getTotalItemInRange(fromOrderDate, toOrderDate);
 	}
-	
+
 	@Override
-	public BigDecimal getTotalCollectionInRange(Date fromOrderDate, Date toOrderDate){
-		return orderRepository.getTotalCollectionInRange(fromOrderDate,toOrderDate);
+	public BigDecimal getTotalCollectionInRange(Date fromOrderDate, Date toOrderDate) {
+		return orderRepository.getTotalCollectionInRange(fromOrderDate, toOrderDate);
 	}
 
 	@Override
@@ -139,6 +139,24 @@ public class OrderServiceImpl implements OrderService {
 			orderDataList.add(orderData);
 		}
 		return orderDataList;
+	}
+
+	@Override
+	public Long getTotalItemSoldById(Long id) {
+		Long total = orderDetailRepsitory.getTotalItemSoldById(id);
+		if (total == null) {
+			total = 0l;
+		}
+		return total;
+	}
+
+	@Override
+	public Long getTotalItemSoldByIdInRange(Long id, Date fromDate, Date toDate) {
+		Long total = orderDetailRepsitory.getTotalItemSoldByIdInRange(id, fromDate, toDate);
+		if (total == null) {
+			total = 0l;
+		}
+		return total;
 	}
 
 }

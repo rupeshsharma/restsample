@@ -15,20 +15,24 @@ import com.my.sample.converter.MenuConverter;
 import com.my.sample.data.CategoryData;
 import com.my.sample.data.ItemData;
 import com.my.sample.data.MenuData;
+import com.my.sample.data.YGraphData;
 import com.my.sample.domain.Category;
 import com.my.sample.domain.Item;
 import com.my.sample.repository.CategoryRepository;
 import com.my.sample.repository.ItemRepository;
 import com.my.sample.service.MenuService;
+import com.my.sample.service.OrderService;
 
 @Service("menuService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class MenuServiceImpl implements MenuService {
 	private final ItemRepository itemRepository;
 	private final CategoryRepository categoryRepository;
+	private final OrderService orderService;
 
 	@Autowired
-	public MenuServiceImpl(ItemRepository itemRepository, CategoryRepository categoryRepository) {
+	public MenuServiceImpl(ItemRepository itemRepository, CategoryRepository categoryRepository,
+			OrderService orderService) {
 		super();
 
 		if (itemRepository == null) {
@@ -37,9 +41,13 @@ public class MenuServiceImpl implements MenuService {
 		if (categoryRepository == null) {
 			throw new IllegalArgumentException("categoryRepository cannot be null");
 		}
+		if (orderService == null) {
+			throw new IllegalArgumentException("orderService cannot be null");
+		}
 
 		this.itemRepository = itemRepository;
 		this.categoryRepository = categoryRepository;
+		this.orderService = orderService;
 	}
 
 	@Override
@@ -118,7 +126,7 @@ public class MenuServiceImpl implements MenuService {
 		ItemConverter.convert(item, itemData);
 		return itemData;
 	}
- 
+
 	@Override
 	public Boolean deleteCategory(Long id) {
 		Category category = categoryRepository.findOne(id);
@@ -135,6 +143,36 @@ public class MenuServiceImpl implements MenuService {
 		category = categoryRepository.save(category);
 		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
 		return categoryData;
+	}
+
+	@Override
+	public List<YGraphData> getWholeItemGraphData() {
+		List<YGraphData> yGraphDataList = new ArrayList<YGraphData>();
+
+		List<Item> itemList = itemRepository.getAllItemDataMin();
+		YGraphData yGraphData = null;
+		for (Item item : itemList) {
+			yGraphData = new YGraphData();
+			yGraphData.setLabel(item.getTitle());
+			yGraphData.setY(orderService.getTotalItemSoldById(item.getId()));
+			yGraphDataList.add(yGraphData);
+		}
+		return yGraphDataList;
+	}
+
+	@Override
+	public List<YGraphData> getWholeItemGraphDataInRange(Date fromDate, Date toDate) {
+		List<YGraphData> yGraphDataList = new ArrayList<YGraphData>();
+
+		List<Item> itemList = itemRepository.getAllItemDataMin();
+		YGraphData yGraphData = null;
+		for (Item item : itemList) {
+			yGraphData = new YGraphData();
+			yGraphData.setLabel(item.getTitle());
+			yGraphData.setY(orderService.getTotalItemSoldByIdInRange(item.getId(),fromDate, toDate));
+			yGraphDataList.add(yGraphData);
+		}
+		return yGraphDataList;
 	}
 
 }

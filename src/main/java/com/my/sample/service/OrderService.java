@@ -29,4 +29,8 @@ public interface OrderService {
 
 	List<OrderData> getOrderHistoryForCustomer(Long id);
 
+	Long getTotalItemSoldById(Long id);
+
+	Long getTotalItemSoldByIdInRange(Long id, Date fromDate, Date toDate);
+
 }

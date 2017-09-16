@@ -40,20 +40,20 @@ public class Item implements Serializable {
 	private BigDecimal price;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CATEGORY_ID")
+	@JoinColumn(name = "CATEGORY_ID")
 	private Category category;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
-	
+
 	@Column(name = "TYPE")
 	private String type;
-	
+
 	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
 	private char status;
 
@@ -103,6 +103,11 @@ public class Item implements Serializable {
 
 	public Item(Long id) {
 		this.id = id;
+	}
+
+	public Item(Long id, String title) {
+		this.id = id;
+		this.title = title;
 	}
 
 	@Override
