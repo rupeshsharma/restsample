@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.ExpenseData;
+import com.my.sample.data.MonthlyRevenueChartData;
+import com.my.sample.data.YearlyRevenueChartData;
 
 public interface ExpenseService {
 
@@ -18,5 +20,9 @@ public interface ExpenseService {
 	BigDecimal getTotalExpenseInRange(Date fromExpenseDate, Date toExpenseDate);
 
 	List<DailyRevenueChartData> getDailyChartExpenseDataInRange(Date fromDate, Date toDate);
+
+	List<MonthlyRevenueChartData> getMonthlyChartExpenseDataInRange(Date fromDate, Date toDate);
+
+	List<YearlyRevenueChartData> getYearlyChartExpenseDataInRange();
 
 }

@@ -16,7 +16,11 @@ import com.my.sample.data.DailySalesChartData;
 import com.my.sample.data.DashboardChartDataRequest;
 import com.my.sample.data.DashboardChartDataResponse;
 import com.my.sample.data.GraphData;
+import com.my.sample.data.MonthlyRevenueChartData;
+import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.data.RevenueGraphData;
+import com.my.sample.data.YearlyRevenueChartData;
+import com.my.sample.data.YearlySalesChartData;
 import com.my.sample.domain.Item;
 import com.my.sample.service.ChartService;
 import com.my.sample.service.ExpenseService;
@@ -83,14 +87,21 @@ public class ChartServiceImpl implements ChartService {
 	public DashboardChartDataResponse getDashboardGraphData(DashboardChartDataRequest dashboardChartDataRequest)
 			throws ParseException {
 		DashboardChartDataResponse dashboardChartDataResponse = new DashboardChartDataResponse();
-		List data1 =null;
+		List data1 = null;
 		List data2 = null;
 		Integer year = dashboardChartDataRequest.getYear();
 		Integer daysCount = getDaysCount(dashboardChartDataRequest.getMonth());
 		Integer month = dashboardChartDataRequest.getMonth();
-		Date fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-" + month + "-" + year);
-		Date toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT)
-				.parse(daysCount + "-" + month + "-" + year);
+		Date fromDate = null;
+		Date toDate = null;
+		if (dashboardChartDataRequest.getMonth() != null) {
+			fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-" + month + "-" + year);
+			toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse(daysCount + "-" + month + "-" + year);
+		} else {
+			fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-1-" + year);
+			toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("31-12-" + year);
+		}
+
 		if (AppConstants.Chart.TYPE_SALES.equals(dashboardChartDataRequest.getChartType())) {
 			data1 = new ArrayList<GraphData>();
 			data2 = new ArrayList<GraphData>();
@@ -116,9 +127,41 @@ public class ChartServiceImpl implements ChartService {
 				}
 
 			} else if (AppConstants.Chart.RENDER_BY_MONTHLY.equals(dashboardChartDataRequest.getRenderChartBy())) {
+				List<MonthlySalesChartData> orderData = orderService.getMonthlyChartOrderDataInRange(fromDate, toDate);
+				GraphData orderGraphData = null;
+				for (MonthlySalesChartData monthlyChartData : orderData) {
+					orderGraphData = new GraphData();
+					orderGraphData.setLabel(monthlyChartData.getMonth());
+					orderGraphData.setY(monthlyChartData.getData());
+					data1.add(orderGraphData);
+				}
 
+				List<MonthlySalesChartData> itemData = orderService.getMonthlyChartItemDataInRange(fromDate, toDate);
+				GraphData itemGraphData = null;
+				for (MonthlySalesChartData monthlyChartData : itemData) {
+					itemGraphData = new GraphData();
+					itemGraphData.setLabel(monthlyChartData.getMonth());
+					itemGraphData.setY(monthlyChartData.getData());
+					data2.add(itemGraphData);
+				}
 			} else {
+				List<YearlySalesChartData> orderData = orderService.getYearlyChartOrderDataInRange();
+				GraphData orderGraphData = null;
+				for (YearlySalesChartData yearlyChartData : orderData) {
+					orderGraphData = new GraphData();
+					orderGraphData.setLabel(yearlyChartData.getYear());
+					orderGraphData.setY(yearlyChartData.getData());
+					data1.add(orderGraphData);
+				}
 
+				List<YearlySalesChartData> itemData = orderService.getYearlyChartItemDataInRange();
+				GraphData itemGraphData = null;
+				for (YearlySalesChartData yearlyChartData : itemData) {
+					itemGraphData = new GraphData();
+					itemGraphData.setLabel(yearlyChartData.getYear());
+					itemGraphData.setY(yearlyChartData.getData());
+					data2.add(itemGraphData);
+				}
 			}
 		} else {
 			data1 = new ArrayList<RevenueGraphData>();
@@ -143,6 +186,44 @@ public class ChartServiceImpl implements ChartService {
 					expenseGraphData
 							.setLabel(new SimpleDateFormat(AppConstants.DATE_FORMAT).format(dailyChartData.getDate()));
 					expenseGraphData.setY(dailyChartData.getData());
+					data2.add(expenseGraphData);
+				}
+			} else if (AppConstants.Chart.RENDER_BY_MONTHLY.equals(dashboardChartDataRequest.getRenderChartBy())) {
+				List<MonthlyRevenueChartData> collectionData = orderService
+						.getMonthlyChartCollectionDataInRange(fromDate, toDate);
+				RevenueGraphData collectionGraphData = null;
+				for (MonthlyRevenueChartData monthlyChartData : collectionData) {
+					collectionGraphData = new RevenueGraphData();
+					collectionGraphData.setLabel(monthlyChartData.getMonth());
+					collectionGraphData.setY(monthlyChartData.getData());
+					data1.add(collectionGraphData);
+				}
+
+				List<MonthlyRevenueChartData> expenseData = expenseService.getMonthlyChartExpenseDataInRange(fromDate,
+						toDate);
+				RevenueGraphData expenseGraphData = null;
+				for (MonthlyRevenueChartData monthlyChartData : expenseData) {
+					expenseGraphData = new RevenueGraphData();
+					expenseGraphData.setLabel(monthlyChartData.getMonth());
+					expenseGraphData.setY(monthlyChartData.getData());
+					data2.add(expenseGraphData);
+				}
+			} else {
+				List<YearlyRevenueChartData> collectionData = orderService.getYearlyChartCollectionDataInRange();
+				RevenueGraphData collectionGraphData = null;
+				for (YearlyRevenueChartData yearlyChartData : collectionData) {
+					collectionGraphData = new RevenueGraphData();
+					collectionGraphData.setLabel(yearlyChartData.getYear());
+					collectionGraphData.setY(yearlyChartData.getData());
+					data1.add(collectionGraphData);
+				}
+
+				List<YearlyRevenueChartData> expenseData = expenseService.getYearlyChartExpenseDataInRange();
+				RevenueGraphData expenseGraphData = null;
+				for (YearlyRevenueChartData yearlyChartData : expenseData) {
+					expenseGraphData = new RevenueGraphData();
+					expenseGraphData.setLabel(yearlyChartData.getYear());
+					expenseGraphData.setY(yearlyChartData.getData());
 					data2.add(expenseGraphData);
 				}
 			}

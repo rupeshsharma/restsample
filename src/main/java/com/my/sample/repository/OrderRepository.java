@@ -9,8 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.my.sample.data.OrderReviewData;
+import com.my.sample.data.YearlyRevenueChartData;
+import com.my.sample.data.YearlySalesChartData;
 import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.DailySalesChartData;
+import com.my.sample.data.MonthlyRevenueChartData;
+import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.domain.OrderDomain;
 
 public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
@@ -48,5 +52,19 @@ public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
 	@Query("SELECT New com.my.sample.data.DailyRevenueChartData(o.orderDate, SUM(o.grandTotal)) from OrderDomain o where o.orderDate BETWEEN :fromOrderDate AND :toOrderDate group by o.orderDate")
 	List<DailyRevenueChartData> getDailyChartCollectionDataInRange(@Param("fromOrderDate") Date fromOrderDate,
 			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.MonthlySalesChartData(DATE_FORMAT(o.orderDate,'%M'), COUNT(o)) from OrderDomain o where o.orderDate BETWEEN :fromOrderDate AND :toOrderDate group by DATE_FORMAT(o.orderDate,'%M')")
+	List<MonthlySalesChartData> getMonthlyChartOrderDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.MonthlyRevenueChartData(DATE_FORMAT(o.orderDate,'%M'), SUM(o.grandTotal)) from OrderDomain o where o.orderDate BETWEEN :fromOrderDate AND :toOrderDate group by DATE_FORMAT(o.orderDate,'%M')")
+	List<MonthlyRevenueChartData> getMonthlyChartCollectionDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.YearlySalesChartData(DATE_FORMAT(o.orderDate,'%Y'), COUNT(o)) from OrderDomain o group by DATE_FORMAT(o.orderDate,'%Y')")
+	List<YearlySalesChartData> getYearlyChartOrderDataInRange();
+
+	@Query("SELECT New com.my.sample.data.YearlyRevenueChartData(DATE_FORMAT(o.orderDate,'%Y'), SUM(o.grandTotal)) from OrderDomain o group by DATE_FORMAT(o.orderDate,'%Y')")
+	List<YearlyRevenueChartData> getYearlyChartCollectionDataInRange();
 
 }

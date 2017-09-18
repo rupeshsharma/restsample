@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.my.sample.converter.ExpenseConverter;
 import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.ExpenseData;
+import com.my.sample.data.MonthlyRevenueChartData;
+import com.my.sample.data.YearlyRevenueChartData;
 import com.my.sample.domain.Expense;
 import com.my.sample.repository.ExpenseRepository;
 import com.my.sample.service.ExpenseService;
@@ -84,6 +86,16 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<DailyRevenueChartData> getDailyChartExpenseDataInRange(Date fromDate, Date toDate) {
 		return expenseRepository.getDailyChartExpenseDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<MonthlyRevenueChartData> getMonthlyChartExpenseDataInRange(Date fromDate, Date toDate) {
+		return expenseRepository.getMonthlyChartExpenseDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<YearlyRevenueChartData> getYearlyChartExpenseDataInRange() {
+		return expenseRepository.getYearlyChartExpenseDataInRange();
 	}
 
 }

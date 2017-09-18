@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.my.sample.data.DailySalesChartData;
+import com.my.sample.data.MonthlySalesChartData;
+import com.my.sample.data.YearlySalesChartData;
 import com.my.sample.domain.OrderDetail;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
@@ -26,6 +28,14 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 			@Param("toOrderDate") Date toOrderDate);
 
 	@Query("SELECT New com.my.sample.data.DailySalesChartData(od.createdDate, SUM(od.quantity)) from OrderDetail od where od.createdDate BETWEEN :fromOrderDate AND :toOrderDate group by od.createdDate")
-	List<DailySalesChartData> getDailyChartItemDataInRange(@Param("fromOrderDate") Date fromOrderDate, @Param("toOrderDate") Date toOrderDate);
+	List<DailySalesChartData> getDailyChartItemDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.MonthlySalesChartData(DATE_FORMAT(od.createdDate,'%M'), SUM(od.quantity)) from OrderDetail od where od.createdDate BETWEEN :fromOrderDate AND :toOrderDate group by DATE_FORMAT(od.createdDate,'%M')")
+	List<MonthlySalesChartData> getMonthlyChartItemDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.YearlySalesChartData(DATE_FORMAT(od.createdDate,'%Y'), SUM(od.quantity)) from OrderDetail od group by DATE_FORMAT(od.createdDate,'%Y')")
+	List<YearlySalesChartData> getYearlyChartItemDataInRange();
 
 }

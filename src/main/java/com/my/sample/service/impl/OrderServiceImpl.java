@@ -13,8 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.my.sample.converter.OrderConverter;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderReviewData;
+import com.my.sample.data.YearlyRevenueChartData;
+import com.my.sample.data.YearlySalesChartData;
 import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.DailySalesChartData;
+import com.my.sample.data.MonthlyRevenueChartData;
+import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.domain.OrderDomain;
 import com.my.sample.repository.OrderDetailRepository;
 import com.my.sample.repository.OrderRepository;
@@ -174,6 +178,36 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<DailyRevenueChartData> getDailyChartCollectionDataInRange(Date fromDate, Date toDate) {
 		return orderRepository.getDailyChartCollectionDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<MonthlySalesChartData> getMonthlyChartOrderDataInRange(Date fromDate, Date toDate) {
+		return orderRepository.getMonthlyChartOrderDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<MonthlySalesChartData> getMonthlyChartItemDataInRange(Date fromDate, Date toDate) {
+		return orderDetailRepsitory.getMonthlyChartItemDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<MonthlyRevenueChartData> getMonthlyChartCollectionDataInRange(Date fromDate, Date toDate) {
+		return orderRepository.getMonthlyChartCollectionDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<YearlySalesChartData> getYearlyChartOrderDataInRange() {
+		return orderRepository.getYearlyChartOrderDataInRange();
+	}
+
+	@Override
+	public List<YearlySalesChartData> getYearlyChartItemDataInRange() {
+		return orderDetailRepsitory.getYearlyChartItemDataInRange();
+	}
+
+	@Override
+	public List<YearlyRevenueChartData> getYearlyChartCollectionDataInRange() {
+		return orderRepository.getYearlyChartCollectionDataInRange();
 	}
 
 }
