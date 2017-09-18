@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.sample.converter.ExpenseConverter;
+import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.ExpenseData;
 import com.my.sample.domain.Expense;
 import com.my.sample.repository.ExpenseRepository;
@@ -53,7 +54,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		if (expense == null) {
 			expense = new Expense();
-		}else{
+		} else {
 			expense.setModifiedDate(new Date());
 		}
 		ExpenseConverter.reverse(expenseData, expense);
@@ -78,6 +79,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public BigDecimal getTotalExpenseInRange(Date fromExpenseDate, Date toExpenseDate) {
 		return expenseRepository.getTotalExpenseInRange(fromExpenseDate, toExpenseDate);
+	}
+
+	@Override
+	public List<DailyRevenueChartData> getDailyChartExpenseDataInRange(Date fromDate, Date toDate) {
+		return expenseRepository.getDailyChartExpenseDataInRange(fromDate, toDate);
 	}
 
 }

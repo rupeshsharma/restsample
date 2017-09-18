@@ -1,9 +1,6 @@
 package com.my.sample.REST.api;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,14 +75,6 @@ public class MenuController {
 		return new ResponseEntity<>(menuService.updateItem(itemData), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/wholeItemGraph", method = RequestMethod.GET)
-	public ResponseEntity<?> getWholeItemGraphData() throws Exception {
-		return new ResponseEntity<>(menuService.getWholeItemGraphData(), HttpStatus.OK);
-	}
 	
-	@RequestMapping(value = "/wholeItemGraph/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public ResponseEntity<?> getWholeItemGraphDataInRange(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date fromDate, @PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date toDate) throws Exception {
-		return new ResponseEntity<>(menuService.getWholeItemGraphDataInRange(fromDate,toDate), HttpStatus.OK);
-	}
 
 }

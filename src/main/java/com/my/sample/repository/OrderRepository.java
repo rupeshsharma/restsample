@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.my.sample.data.OrderReviewData;
+import com.my.sample.data.DailyRevenueChartData;
+import com.my.sample.data.DailySalesChartData;
 import com.my.sample.domain.OrderDomain;
 
 public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
@@ -38,5 +40,13 @@ public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
 
 	@Query("SELECT New OrderDomain(o.id, o.orderNumber, o.orderDate, o.createdDate, o.paymentType, o.diningMode, o.grandTotal, o.customer) from OrderDomain o where o.customer.id = :id")
 	List<OrderDomain> getOrderHistoryForCustomer(@Param("id") Long id);
+
+	@Query("SELECT New com.my.sample.data.DailySalesChartData(o.orderDate, COUNT(o)) from OrderDomain o where o.orderDate BETWEEN :fromOrderDate AND :toOrderDate group by o.orderDate")
+	List<DailySalesChartData> getDailyChartOrderDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
+
+	@Query("SELECT New com.my.sample.data.DailyRevenueChartData(o.orderDate, SUM(o.grandTotal)) from OrderDomain o where o.orderDate BETWEEN :fromOrderDate AND :toOrderDate group by o.orderDate")
+	List<DailyRevenueChartData> getDailyChartCollectionDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate);
 
 }

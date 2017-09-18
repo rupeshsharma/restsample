@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.my.sample.converter.OrderConverter;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderReviewData;
+import com.my.sample.data.DailyRevenueChartData;
+import com.my.sample.data.DailySalesChartData;
 import com.my.sample.domain.OrderDomain;
 import com.my.sample.repository.OrderDetailRepository;
 import com.my.sample.repository.OrderRepository;
@@ -157,6 +159,21 @@ public class OrderServiceImpl implements OrderService {
 			total = 0l;
 		}
 		return total;
+	}
+
+	@Override
+	public List<DailySalesChartData> getDailyChartOrderDataInRange(Date fromDate, Date toDate) {
+		return orderRepository.getDailyChartOrderDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<DailySalesChartData> getDailyChartItemDataInRange(Date fromDate, Date toDate) {
+		return orderDetailRepsitory.getDailyChartItemDataInRange(fromDate, toDate);
+	}
+
+	@Override
+	public List<DailyRevenueChartData> getDailyChartCollectionDataInRange(Date fromDate, Date toDate) {
+		return orderRepository.getDailyChartCollectionDataInRange(fromDate, toDate);
 	}
 
 }

@@ -1,16 +1,14 @@
 package com.my.sample.converter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		// TODO Auto-generated method stub
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		String formattedDate = formatter.format(new Date());
-		System.out.println(formattedDate);
-
+		System.out.println(new SimpleDateFormat("dd-MM-yyyy").parse("1-1-2017"));
 	}
 
 }

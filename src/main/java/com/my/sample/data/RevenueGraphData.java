@@ -1,21 +1,21 @@
 package com.my.sample.data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-public class YGraphData implements Serializable {
-
+public class RevenueGraphData implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2914802116654185942L;
-	Long y;
+	private static final long serialVersionUID = -623307834525838729L;
+	BigDecimal y;
 	String label;
 
-	public Long getY() {
+	public BigDecimal getY() {
 		return y;
 	}
 
-	public void setY(Long y) {
+	public void setY(BigDecimal y) {
 		this.y = y;
 	}
 
@@ -26,5 +26,4 @@ public class YGraphData implements Serializable {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
 }
