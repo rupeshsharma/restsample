@@ -1,10 +1,9 @@
 package com.my.sample.service;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-import com.my.sample.data.UserData;
+
 import com.my.sample.data.ChangePasswordData;
+import com.my.sample.data.UserData;
 
 
 public interface UserService {

@@ -1,5 +1,7 @@
 package com.my.sample.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +14,5 @@ public interface MasterEntityRepository extends JpaRepository<MasterEntity, Long
     List<MasterEntity> findAll();
     
     @Query("Select m FROM MasterEntity m WHERE m.name = :type AND m.value = :value AND m.status = 'y'")
-    MasterEntity findMasterEntityByTypeAndValue(@Param("type")type, @Param("value")value);
+    MasterEntity findMasterEntityByTypeAndValue(@Param("type")String type, @Param("value")String value);
 }
