@@ -47,5 +47,32 @@ public class MasterEntityServiceImpl implements MasterEntityService {
 		}
 		return masterEntityData;
 	}
+	
+	private MasterEntity findMasterEntityByTypeAndValue(String type, String value){
+	   return masterEntityRepository.findMasterEntityByTypeAndValue(type, value);
+	}
+	
+	@Override
+	public void addMasterEntity(String type, String value){
+	    MasterEntity masterEntity = new MasterEntity();
+	    masterEntity.setName(type);
+	    masterEntity.setValue(value);
+	    masterEntity.setStatus('y');
+	    masterEntityRepository.save(masterEntity);
+	}
+	
+	@Override
+    	public void updateMasterEntity(String type, String previousValue, String newValue){
+	    MasterEntity masterEntity = findMasterEntityByTypeAndValue(type, previousValue);
+	    masterEntity.setValue(newValue);
+	    masterEntityRepository.save(masterEntity);
+    	}
+	
+	@Override
+    	public void removeMasterEntity(String type, String value){
+	    MasterEntity masterEntity = findMasterEntityByTypeAndValue(type, value);
+	    masterEntity.setStatus('n');
+	    masterEntityRepository.save(masterEntity);
+    	}
 
 }
