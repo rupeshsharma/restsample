@@ -28,6 +28,9 @@ public class MasterEntity implements Serializable {
 
 	@Column(name = "VALUE")
 	private String value;
+	
+	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
+    	private char status;
 
 	public Long getId() {
 		return id;
@@ -52,6 +55,14 @@ public class MasterEntity implements Serializable {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public char getStatus() {
+        	return status;
+    	}
+
+    	public void setStatus(char status) {
+        	this.status = status;
+    	}
 	
 	@Override
 	public int hashCode() {
