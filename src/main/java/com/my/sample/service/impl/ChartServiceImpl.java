@@ -83,11 +83,14 @@ public class ChartServiceImpl implements ChartService {
 		return yGraphDataList;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public DashboardChartDataResponse getDashboardGraphData(DashboardChartDataRequest dashboardChartDataRequest)
 			throws ParseException {
 		DashboardChartDataResponse dashboardChartDataResponse = new DashboardChartDataResponse();
+		@SuppressWarnings("rawtypes")
 		List data1 = null;
+		@SuppressWarnings("rawtypes")
 		List data2 = null;
 		Integer year = dashboardChartDataRequest.getYear();
 		Integer daysCount = getDaysCount(dashboardChartDataRequest.getMonth());
