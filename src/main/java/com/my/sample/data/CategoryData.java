@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.DefaultDateTimeSerializer;
+import com.my.sample.util.DefaultDateTimeSerializer;
 
 public class CategoryData implements Serializable {
 	/**

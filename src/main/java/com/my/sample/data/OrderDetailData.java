@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.DefaultDateTimeSerializer;
+import com.my.sample.util.DefaultDateTimeSerializer;
 
 public class OrderDetailData implements Serializable {
 	/**

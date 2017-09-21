@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.sample.config.security.Authorities;
+import com.my.sample.config.security.RestSecurity;
 import com.my.sample.service.MasterEntityService;
 
 @RestController
@@ -27,6 +29,7 @@ public class MasterEntityController {
 		this.masterEntityService = masterEntityService;
 	}
 
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN, Authorities.ROLE_USER })
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getMasterEntity() {
 		return new ResponseEntity<>(masterEntityService.getMasterEntity(), HttpStatus.OK);

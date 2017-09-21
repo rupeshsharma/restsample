@@ -15,4 +15,6 @@ public interface UserService {
 	
 	void changePassword(ChangePasswordData changePasswordData);
 
+	UserData authenticate(String username, String password);
+
 }

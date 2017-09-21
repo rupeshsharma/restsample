@@ -10,5 +10,9 @@ public interface AppConstants {
 		String RENDER_BY_YEARLY = "y";
 	}
 
+	interface Headers {
+		String AUTHORIZATION = "Authorization";
+	}
+
 	String DATE_FORMAT = "dd-MM-yyyy";
 }

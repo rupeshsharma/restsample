@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.DefaultDateTimeSerializer;
+import com.my.sample.util.DefaultDateTimeSerializer;
 
 public class CustomerData implements Serializable {
 

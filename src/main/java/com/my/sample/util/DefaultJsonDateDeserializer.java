@@ -1,4 +1,4 @@
-package com.my.sample.config;
+package com.my.sample.util;
 
 import java.io.IOException;
 import java.text.ParseException;

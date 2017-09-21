@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.my.sample.config.DefaultDateSerializer;
-import com.my.sample.config.DefaultDateTimeSerializer;
+import com.my.sample.util.DefaultDateSerializer;
+import com.my.sample.util.DefaultDateTimeSerializer;
 
 public class OrderData implements Serializable {
 
