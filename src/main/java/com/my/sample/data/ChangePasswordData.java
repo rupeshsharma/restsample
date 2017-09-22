@@ -7,8 +7,18 @@ public class ChangePasswordData implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8686085957616384264L;
-	String password;
+	
+	private Long id;
+	private String password;
+	
+	public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 	public String getPassword() {
 		return password;
 	}
