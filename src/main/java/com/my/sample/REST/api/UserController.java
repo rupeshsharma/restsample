@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.my.sample.data.ChangePasswordData;
 import com.my.sample.data.UserData;
@@ -49,5 +50,11 @@ public class UserController {
 		userService.changePassword(changePasswordData);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
+    	public ResponseEntity<?> removeUser(@PathVariable Long id) throws Exception {
+		userService.removeUser(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+    	}
 
 }
