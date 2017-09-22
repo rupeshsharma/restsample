@@ -1,7 +1,7 @@
 package com.my.sample.service.impl;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,24 +32,43 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserData createUser(UserData userData) {
-		return null;
+	    User user = new User();
+	    UserConverter.reverse(userData, user);
+	    user.setPassword(userData.getPassword());
+	    user = userRepository.save(user);
+	    UserConverter.convert(user, userData);
+		return userData;
 	}
 
 	@Override
 	public List<UserData> getUser() {
-		return null;
+		return userRepository.getALL();
 	}
 
 	@Override
 	public UserData updateUser(UserData userData) {
-		// TODO Auto-generated method stub
-		return null;
+	    User user = userRepository.findOne(userData.getId());
+	    user.setName(userData.getName());
+	    user.setEmail(userData.getEmail());
+	    user.setContact(userData.getContact());
+	    user.setRole(userData.getRole());
+	    user = userRepository.save(user);
+        UserConverter.convert(user, userData);
+		return userData;
 	}
 
 	@Override
 	public void changePassword(ChangePasswordData changePasswordData) {
-		// TODO Auto-generated method stub
-
+	    User user = userRepository.findOne(changePasswordData.getId());
+	    user.setPassword(changePasswordData.getPassword());
+	    userRepository.save(user);
+	}
+	
+	@Override
+	public void removeUser(Long id){
+	    User user = userRepository.findOne(id);
+	    user.setStatus('n');
+	    userRepository.save(user);
 	}
 
 	@Override
@@ -60,7 +79,7 @@ public class UserServiceImpl implements UserService {
 			userData = new UserData();
 			UserConverter.convert(user, userData);
 		}else{
-			throw new AccessDeniedException(401, "User does not have required permission");
+			throw new AccessDeniedException("User does not have required permission");
 		}
 		return userData;
 	}
