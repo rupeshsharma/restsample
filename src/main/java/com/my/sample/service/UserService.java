@@ -14,6 +14,8 @@ public interface UserService {
 	UserData updateUser(UserData userData);
 	
 	void changePassword(ChangePasswordData changePasswordData);
+	
+	void removeUser(Long id);
 
 	UserData authenticate(String username, String password);
 
