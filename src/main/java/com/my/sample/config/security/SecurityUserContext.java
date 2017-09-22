@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.my.sample.data.UserData;
 
-@Component
+@Component("securityUserContext")
 public final class SecurityUserContext {
 
 	public final UserData getCurrentUser() {

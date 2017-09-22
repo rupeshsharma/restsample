@@ -23,11 +23,12 @@ public class UserData implements Serializable {
 
 	private String role;
 	
-	public UserData(Long id, String userName, String name, String contact, String role){
+	public UserData(Long id, String userName, String name, String contact, String email, String role){
 	    this.id = id;
 	    this.userName = userName;
 	    this.name = name;
 	    this.contact = contact;
+	    this.email =email;
 	    this.role = role;
 	}
 	

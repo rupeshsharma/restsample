@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.sample.config.security.SecurityUserContext;
 import com.my.sample.converter.ExpenseConverter;
 import com.my.sample.data.DailyRevenueChartData;
 import com.my.sample.data.ExpenseData;
 import com.my.sample.data.MonthlyRevenueChartData;
 import com.my.sample.data.YearlyRevenueChartData;
 import com.my.sample.domain.Expense;
+import com.my.sample.domain.User;
 import com.my.sample.repository.ExpenseRepository;
 import com.my.sample.service.ExpenseService;
 
@@ -24,15 +26,20 @@ import com.my.sample.service.ExpenseService;
 public class ExpenseServiceImpl implements ExpenseService {
 
 	private final ExpenseRepository expenseRepository;
+	private final SecurityUserContext securityUserContext;
 
 	@Autowired
-	public ExpenseServiceImpl(ExpenseRepository expenseRepository) {
+	public ExpenseServiceImpl(ExpenseRepository expenseRepository, SecurityUserContext securityUserContext) {
 		super();
 
 		if (expenseRepository == null) {
 			throw new IllegalArgumentException("expenseRepository cannot be null");
 		}
+		if (securityUserContext == null) {
+			throw new IllegalArgumentException("securityUserContext cannot be null");
+		}
 		this.expenseRepository = expenseRepository;
+		this.securityUserContext = securityUserContext;
 	}
 
 	@Override
@@ -56,8 +63,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		if (expense == null) {
 			expense = new Expense();
+			expense.setCreatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		} else {
 			expense.setModifiedDate(new Date());
+			expense.setUpdatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		}
 		ExpenseConverter.reverse(expenseData, expense);
 		expense = expenseRepository.save(expense);

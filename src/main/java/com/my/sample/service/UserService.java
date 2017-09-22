@@ -2,8 +2,11 @@ package com.my.sample.service;
 
 import java.util.List;
 
+import javax.naming.AuthenticationException;
+
 import com.my.sample.data.ChangePasswordData;
 import com.my.sample.data.UserData;
+import com.my.sample.domain.User;
 
 
 public interface UserService {
@@ -17,6 +20,8 @@ public interface UserService {
 	
 	void removeUser(Long id);
 
-	UserData authenticate(String username, String password);
+	UserData authenticate(String username, String password) throws AuthenticationException;
+	
+	User getUserByUsername(String username);
 
 }

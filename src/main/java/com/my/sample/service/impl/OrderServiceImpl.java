@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.sample.config.security.SecurityUserContext;
 import com.my.sample.converter.OrderConverter;
 import com.my.sample.data.OrderData;
 import com.my.sample.data.OrderReviewData;
@@ -20,6 +21,7 @@ import com.my.sample.data.DailySalesChartData;
 import com.my.sample.data.MonthlyRevenueChartData;
 import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.domain.OrderDomain;
+import com.my.sample.domain.User;
 import com.my.sample.repository.OrderDetailRepository;
 import com.my.sample.repository.OrderRepository;
 import com.my.sample.service.OrderService;
@@ -30,9 +32,11 @@ public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
 	private final OrderDetailRepository orderDetailRepsitory;
+	private final SecurityUserContext securityUserContext;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepsitory) {
+	public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepsitory,
+			SecurityUserContext securityUserContext) {
 		super();
 
 		if (orderRepository == null) {
@@ -41,9 +45,13 @@ public class OrderServiceImpl implements OrderService {
 		if (orderDetailRepsitory == null) {
 			throw new IllegalArgumentException("orderDetailRepsitory cannot be null");
 		}
+		if (securityUserContext == null) {
+			throw new IllegalArgumentException("securityUserContext cannot be null");
+		}
 
 		this.orderRepository = orderRepository;
 		this.orderDetailRepsitory = orderDetailRepsitory;
+		this.securityUserContext = securityUserContext;
 	}
 
 	@Override
@@ -51,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderDomain order = new OrderDomain();
 		OrderConverter.reverse(orderData, order);
 		order.setOrderNumber(findMaxOrderNumberForDate(new Date()) + 1l);
+		order.setCreatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		order = orderRepository.save(order);
 		return order.getOrderNumber();
 	}

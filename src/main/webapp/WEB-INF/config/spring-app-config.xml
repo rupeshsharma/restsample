@@ -74,6 +74,7 @@
 			<mvc:exclude-mapping path="/api/login"/>
 			<bean class="com.my.sample.config.security.interceptor.AuthorizationInterceptor">
 			    <property name="userService" ref="userService"></property>
+			    <property name="bCryptPasswordEncoder" ref="bCryptPasswordEncoder"></property>
 			</bean>	
 		</mvc:interceptor>
 	</mvc:interceptors>

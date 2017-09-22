@@ -35,12 +35,14 @@ public class MasterEntityController {
 		return new ResponseEntity<>(masterEntityService.getMasterEntity(), HttpStatus.OK);
 	}
 
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN })
 	@RequestMapping(value = "/add/{type}/{value}", method = RequestMethod.POST)
 	public ResponseEntity<?> addMasterEntity(@PathVariable String type, @PathVariable String value) {
 		masterEntityService.addMasterEntity(type, value);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN })
 	@RequestMapping(value = "/update/{type}/{previousValue}/{newValue}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateMasterEntity(@PathVariable String type, @PathVariable String previousValue,
 			@PathVariable String newValue) {
@@ -48,6 +50,7 @@ public class MasterEntityController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN })
 	@RequestMapping(value = "/remove/{type}/{value}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> removeMasterEntity(@PathVariable String type, @PathVariable String value) {
 		masterEntityService.removeMasterEntity(type, value);

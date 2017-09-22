@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,7 +32,7 @@ public class Expense implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date createdDate;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
@@ -38,21 +40,29 @@ public class Expense implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "EXPENSE_DATE")
 	private Date dateOfExpense;
-	
+
 	@Column(name = "CATEGORY")
 	private String category;
-	
+
 	@Column(name = "TYPE")
 	private String type;
-	
+
 	@Column(name = "DESCRIPTION")
 	private String description;
-	
+
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
-	
+
 	@Column(name = "PAYMENT_MODE")
 	private String paymentMode;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "UPDATED_BY")
+	private User updatedBy;
 
 	public Long getId() {
 		return id;
@@ -124,5 +134,21 @@ public class Expense implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }

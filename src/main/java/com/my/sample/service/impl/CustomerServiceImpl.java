@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.sample.config.security.SecurityUserContext;
 import com.my.sample.converter.CustomerConverter;
 import com.my.sample.data.CustomerData;
 import com.my.sample.domain.Customer;
+import com.my.sample.domain.User;
 import com.my.sample.repository.CustomerRepository;
 import com.my.sample.service.CustomerService;
 
@@ -20,15 +22,20 @@ import com.my.sample.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
 
 	private final CustomerRepository customerRepository;
+	private final SecurityUserContext securityUserContext;
 
 	@Autowired
-	public CustomerServiceImpl(CustomerRepository customerRepository) {
+	public CustomerServiceImpl(CustomerRepository customerRepository, SecurityUserContext securityUserContext) {
 		super();
 
 		if (customerRepository == null) {
 			throw new IllegalArgumentException("customerRepository cannot be null");
 		}
+		if (securityUserContext == null) {
+			throw new IllegalArgumentException("securityUserContext cannot be null");
+		}
 		this.customerRepository = customerRepository;
+		this.securityUserContext = securityUserContext;
 	}
 
 	@Override
@@ -41,6 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 			customer.setCreatedDate(date);
 			customer.setLastVisited(date);
 			customer.setMobile(mobile);
+			customer.setCreatedBy(new User(securityUserContext.getCurrentUser().getId()));
 			customer = customerRepository.save(customer);
 		}
 		CustomerConverter.convert(customer, customerData);

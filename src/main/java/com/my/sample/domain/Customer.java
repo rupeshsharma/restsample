@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +48,10 @@ public class Customer implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
+	
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
 
 	public Customer() {
 
@@ -138,5 +144,13 @@ public class Customer implements Serializable {
 
 	public void setLastVisited(Date lastVisited) {
 		this.lastVisited = lastVisited;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 }

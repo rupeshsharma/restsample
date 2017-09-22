@@ -21,7 +21,7 @@
 	</appender> -->
 
 	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="../logs/orbit/hcl_orbit.log" />
+		<param name="File" value="../logs/sample/sample.log" />
 		<param name="DatePattern" value=".yyyy-MM-dd" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"

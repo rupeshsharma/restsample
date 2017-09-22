@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.sample.config.security.SecurityUserContext;
 import com.my.sample.converter.CategoryConverter;
 import com.my.sample.converter.ItemConverter;
 import com.my.sample.converter.MenuConverter;
@@ -17,6 +18,7 @@ import com.my.sample.data.ItemData;
 import com.my.sample.data.MenuData;
 import com.my.sample.domain.Category;
 import com.my.sample.domain.Item;
+import com.my.sample.domain.User;
 import com.my.sample.repository.CategoryRepository;
 import com.my.sample.repository.ItemRepository;
 import com.my.sample.service.MenuService;
@@ -26,9 +28,11 @@ import com.my.sample.service.MenuService;
 public class MenuServiceImpl implements MenuService {
 	private final ItemRepository itemRepository;
 	private final CategoryRepository categoryRepository;
+	private final SecurityUserContext securityUserContext;
 
 	@Autowired
-	public MenuServiceImpl(ItemRepository itemRepository, CategoryRepository categoryRepository) {
+	public MenuServiceImpl(ItemRepository itemRepository, CategoryRepository categoryRepository,
+			SecurityUserContext securityUserContext) {
 		super();
 
 		if (itemRepository == null) {
@@ -37,9 +41,13 @@ public class MenuServiceImpl implements MenuService {
 		if (categoryRepository == null) {
 			throw new IllegalArgumentException("categoryRepository cannot be null");
 		}
+		if (securityUserContext == null) {
+			throw new IllegalArgumentException("securityUserContext cannot be null");
+		}
 
 		this.itemRepository = itemRepository;
 		this.categoryRepository = categoryRepository;
+		this.securityUserContext = securityUserContext;
 	}
 
 	@Override
@@ -56,6 +64,7 @@ public class MenuServiceImpl implements MenuService {
 		CategoryConverter.reverse(categoryData, category);
 		category.setCreatedDate(new Date());
 		category.setStatus('y');
+		category.setCreatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		category = categoryRepository.save(category);
 		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
 		return categoryData;
@@ -67,6 +76,7 @@ public class MenuServiceImpl implements MenuService {
 		ItemConverter.reverse(itemData, item);
 		item.setCreatedDate(new Date());
 		item.setStatus('y');
+		item.setCreatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		item = itemRepository.save(item);
 		Category category = categoryRepository.findOne(itemData.getCategory());
 		category.getItems().add(item);
@@ -114,6 +124,7 @@ public class MenuServiceImpl implements MenuService {
 		Item item = itemRepository.findOne(itemData.getId());
 		ItemConverter.reverse(itemData, item);
 		item.setModifiedDate(new Date());
+		item.setUpdatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		item = itemRepository.save(item);
 		ItemConverter.convert(item, itemData);
 		return itemData;
@@ -132,6 +143,7 @@ public class MenuServiceImpl implements MenuService {
 		Category category = categoryRepository.findOne(categoryData.getId());
 		CategoryConverter.reverse(categoryData, category);
 		category.setModifiedDate(new Date());
+		category.setUpdatedBy(new User(securityUserContext.getCurrentUser().getId()));
 		category = categoryRepository.save(category);
 		CategoryConverter.convert(category, categoryData, Boolean.FALSE);
 		return categoryData;

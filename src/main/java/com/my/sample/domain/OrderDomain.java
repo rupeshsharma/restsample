@@ -51,7 +51,7 @@ public class OrderDomain implements Serializable {
 	@Column(name = "DINING_MODE")
 	private String diningMode;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "CREATED_BY")
 	private User createdBy;
 

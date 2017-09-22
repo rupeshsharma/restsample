@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,15 +24,19 @@ public class MasterEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	@Column(name = "NAME")
 	private String name;
 
 	@Column(name = "VALUE")
 	private String value;
-	
+
 	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
-    	private char status;
+	private char status;
+	
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
 
 	public Long getId() {
 		return id;
@@ -55,15 +61,15 @@ public class MasterEntity implements Serializable {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	public char getStatus() {
-        	return status;
-    	}
 
-    	public void setStatus(char status) {
-        	this.status = status;
-    	}
-	
+	public char getStatus() {
+		return status;
+	}
+
+	public void setStatus(char status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,7 +77,6 @@ public class MasterEntity implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -88,5 +93,13 @@ public class MasterEntity implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 }

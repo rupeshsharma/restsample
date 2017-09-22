@@ -51,6 +51,14 @@ public class Item implements Serializable {
 	@Column(name = "MODIFIED_DATE")
 	private Date modifiedDate;
 
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "UPDATED_BY")
+	private User updatedBy;
+
 	@Column(name = "TYPE")
 	private String type;
 
@@ -165,5 +173,21 @@ public class Item implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }

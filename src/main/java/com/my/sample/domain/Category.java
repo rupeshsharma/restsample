@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -46,6 +48,14 @@ public class Category implements Serializable {
 	
 	@Column(name = "STATUS", insertable = true, updatable = true, columnDefinition = "CHAR(1) DEFAULT 'y'")
 	private char status;
+	
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "CREATED_BY")
+	private User createdBy;
+	
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "UPDATED_BY")
+	private User updatedBy;
 
 	@Where(clause="status='y'")
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -142,6 +152,22 @@ public class Category implements Serializable {
 
 	public void setStatus(char status) {
 		this.status = status;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 
 }
