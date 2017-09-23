@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.sample.config.security.Authorities;
 import com.my.sample.config.security.RestSecurity;
 import com.my.sample.data.DashboardChartDataRequest;
+import com.my.sample.data.ItemGraphDataRequest;
 import com.my.sample.service.ChartService;
 
 @RestController
@@ -53,6 +54,12 @@ public class ChartController {
 	public ResponseEntity<?> getDashboardGraphData(@RequestBody DashboardChartDataRequest dashboardChartDataRequest)
 			throws Exception {
 		return new ResponseEntity<>(chartService.getDashboardGraphData(dashboardChartDataRequest), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/perItemGraph/{id}", method = RequestMethod.POST)
+	public ResponseEntity<?> getPerItemGraphData(@RequestBody ItemGraphDataRequest itemGraphDataRequest,
+			@PathVariable Long id) throws Exception {
+		return new ResponseEntity<>(chartService.getPerItemGraphData(itemGraphDataRequest, id), HttpStatus.OK);
 	}
 
 }

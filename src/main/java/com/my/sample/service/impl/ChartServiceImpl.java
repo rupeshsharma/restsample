@@ -16,6 +16,7 @@ import com.my.sample.data.DailySalesChartData;
 import com.my.sample.data.DashboardChartDataRequest;
 import com.my.sample.data.DashboardChartDataResponse;
 import com.my.sample.data.GraphData;
+import com.my.sample.data.ItemGraphDataRequest;
 import com.my.sample.data.MonthlyRevenueChartData;
 import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.data.RevenueGraphData;
@@ -248,6 +249,52 @@ public class ChartServiceImpl implements ChartService {
 		} else {
 			return 28;
 		}
+	}
+
+	@Override
+	public List<GraphData> getPerItemGraphData(ItemGraphDataRequest itemGraphDataRequest, Long id) throws ParseException {
+		List<GraphData> graphDataList = new ArrayList<GraphData>();
+		Date fromDate = null;
+		Date toDate = null;
+		Integer year = itemGraphDataRequest.getYear();
+		Integer daysCount = getDaysCount(itemGraphDataRequest.getMonth());
+		Integer month = itemGraphDataRequest.getMonth();
+		if (itemGraphDataRequest.getMonth() != null) {
+			fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-" + month + "-" + year);
+			toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse(daysCount + "-" + month + "-" + year);
+		} else {
+			fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-1-" + year);
+			toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("31-12-" + year);
+		}
+		if (AppConstants.Chart.RENDER_BY_DAILY.equals(itemGraphDataRequest.getRenderChartBy())) {
+			List<DailySalesChartData> itemData = orderService.getDailyChartPerItemDataInRange(fromDate, toDate, id);
+			GraphData itemGraphData = null;
+			for (DailySalesChartData dailyChartData : itemData) {
+				itemGraphData = new GraphData();
+				itemGraphData.setLabel(new SimpleDateFormat(AppConstants.DATE_FORMAT).format(dailyChartData.getDate()));
+				itemGraphData.setY(dailyChartData.getData());
+				graphDataList.add(itemGraphData);
+			}
+		} else if (AppConstants.Chart.RENDER_BY_MONTHLY.equals(itemGraphDataRequest.getRenderChartBy())) {
+			List<MonthlySalesChartData> itemData = orderService.getMonthlyChartPerItemDataInRange(fromDate, toDate, id);
+			GraphData itemGraphData = null;
+			for (MonthlySalesChartData monthlyChartData : itemData) {
+				itemGraphData = new GraphData();
+				itemGraphData.setLabel(monthlyChartData.getMonth());
+				itemGraphData.setY(monthlyChartData.getData());
+				graphDataList.add(itemGraphData);
+			}
+		} else {
+			List<YearlySalesChartData> itemData = orderService.getYearlyChartPerItemDataInRange(id);
+			GraphData itemGraphData = null;
+			for (YearlySalesChartData yearlyChartData : itemData) {
+				itemGraphData = new GraphData();
+				itemGraphData.setLabel(yearlyChartData.getYear());
+				itemGraphData.setY(yearlyChartData.getData());
+				graphDataList.add(itemGraphData);
+			}
+		}
+		return graphDataList;
 	}
 
 }
