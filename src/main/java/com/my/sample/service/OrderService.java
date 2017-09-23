@@ -57,4 +57,10 @@ public interface OrderService {
 
 	List<YearlyRevenueChartData> getYearlyChartCollectionDataInRange();
 
+	List<DailySalesChartData> getDailyChartPerItemDataInRange(Date fromDate, Date toDate, Long id);
+
+	List<YearlySalesChartData> getYearlyChartPerItemDataInRange(Long id);
+
+	List<MonthlySalesChartData> getMonthlyChartPerItemDataInRange(Date fromDate, Date toDate, Long id);
+
 }

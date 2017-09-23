@@ -38,4 +38,15 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 	@Query("SELECT New com.my.sample.data.YearlySalesChartData(DATE_FORMAT(od.createdDate,'%Y'), SUM(od.quantity)) from OrderDetail od group by DATE_FORMAT(od.createdDate,'%Y')")
 	List<YearlySalesChartData> getYearlyChartItemDataInRange();
 
+	@Query("SELECT New com.my.sample.data.DailySalesChartData(od.createdDate, SUM(od.quantity)) from OrderDetail od where od.item.id = :id AND od.createdDate BETWEEN :fromOrderDate AND :toOrderDate group by od.createdDate")
+	List<DailySalesChartData> getDailyChartPerItemDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate, @Param("id") Long id);
+
+	@Query("SELECT New com.my.sample.data.YearlySalesChartData(DATE_FORMAT(od.createdDate,'%Y'), SUM(od.quantity)) from OrderDetail od where od.item.id = :id group by DATE_FORMAT(od.createdDate,'%Y')")
+	List<YearlySalesChartData> getYearlyChartPerItemDataInRange(@Param("id") Long id);
+
+	@Query("SELECT New com.my.sample.data.MonthlySalesChartData(DATE_FORMAT(od.createdDate,'%M'), SUM(od.quantity)) from OrderDetail od where od.item.id = :id AND od.createdDate BETWEEN :fromOrderDate AND :toOrderDate group by DATE_FORMAT(od.createdDate,'%M')")
+	List<MonthlySalesChartData> getMonthlyChartPerItemDataInRange(@Param("fromOrderDate") Date fromOrderDate,
+			@Param("toOrderDate") Date toOrderDate, @Param("id") Long id);
+
 }

@@ -219,4 +219,19 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.getYearlyChartCollectionDataInRange();
 	}
 
+	@Override
+	public List<DailySalesChartData> getDailyChartPerItemDataInRange(Date fromDate, Date toDate, Long id) {
+		return orderDetailRepsitory.getDailyChartPerItemDataInRange(fromDate, toDate, id);
+	}
+
+	@Override
+	public List<YearlySalesChartData> getYearlyChartPerItemDataInRange(Long id) {
+		return orderDetailRepsitory.getYearlyChartPerItemDataInRange(id);
+	}
+
+	@Override
+	public List<MonthlySalesChartData> getMonthlyChartPerItemDataInRange(Date fromDate, Date toDate, Long id) {
+		return orderDetailRepsitory.getMonthlyChartPerItemDataInRange(fromDate, toDate, id);
+	}
+
 }
