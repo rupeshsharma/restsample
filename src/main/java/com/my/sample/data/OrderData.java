@@ -49,6 +49,8 @@ public class OrderData implements Serializable {
 	private CustomerData customer;
 
 	private List<OrderDetailData> orderDetail;
+	
+	private String orderFrom;
 
 	public Long getId() {
 		return id;
@@ -177,5 +179,13 @@ public class OrderData implements Serializable {
 	public void setSgst(BigDecimal sgst) {
 		this.sgst = sgst;
 	}
+	
+	public String getOrderFrom() {
+        	return orderFrom;
+    	}
+
+    	public void setOrderFrom(String orderFrom) {
+        	this.orderFrom = orderFrom;
+    	}
 
 }
