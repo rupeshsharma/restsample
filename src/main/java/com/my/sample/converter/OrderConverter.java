@@ -21,6 +21,7 @@ public class OrderConverter {
 		target.setCgst(source.getCgst());
 		target.setSgst(source.getSgst());
 		target.setOrderDate(new Date());
+		target.setOrderFrom(source.getOrderFrom());
 		target.setStatus(OrderStatus.PROCESSING.getValue());
 		target.setCustomer(new Customer(source.getCustomer().getId()));
 		target.setDiningMode(source.getDiningMode());
@@ -44,6 +45,7 @@ public class OrderConverter {
 		target.setAfterDiscountTotal(source.getAfterDiscountTotal());
 		target.setCgst(source.getCgst());
 		target.setSgst(source.getSgst());
+		target.setOrderFrom(source.getOrderFrom());
 		target.setOrderNumber(source.getOrderNumber());
 		target.setStatus(source.getStatus());
 		target.setDiningMode(source.getDiningMode());
