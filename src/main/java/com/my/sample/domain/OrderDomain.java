@@ -84,6 +84,9 @@ public class OrderDomain implements Serializable {
 	@JoinTable(name = "R_ORDER_DETAIL_MAPPING", joinColumns = @JoinColumn(name = "ORDER_ID"), inverseJoinColumns = @JoinColumn(name = "ORDER_DETAIL_ID"))
 	@Column(name = "ORDER_DETAIL")
 	private List<OrderDetail> orderDetail;
+	
+	@Column(name = "ORDER_FROM")
+        private String orderFrom;
 
 	public OrderDomain() {
 
@@ -258,4 +261,12 @@ public class OrderDomain implements Serializable {
 	public void setSgst(BigDecimal sgst) {
 		this.sgst = sgst;
 	}
+	
+	public String getOrderFrom() {
+        	return orderFrom;
+    	}
+
+    	public void setOrderFrom(String orderFrom) {
+        	this.orderFrom = orderFrom;
+    	}
 }
