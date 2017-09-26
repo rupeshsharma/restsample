@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 public class SearchCustomerData implements Serializable {
 
-    String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5425338236877796150L;
+	String name;
     String mobile;
     String email;
 
