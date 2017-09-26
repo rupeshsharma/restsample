@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.my.sample.data.CustomerData;
+import com.my.sample.data.SearchCustomerData;
 
 public interface CustomerService {
 	
@@ -11,5 +12,5 @@ public interface CustomerService {
 	CustomerData updateCustomer(CustomerData customerData);
 	void updateLastVisitedDate(Long id);
 	List<CustomerData> getCustomerVisitedBeforeDate(Date lastVisitedDate);
-
+	List<CustomerData> advanceSearch(SearchCustomerData searchCustomerData);
 }
