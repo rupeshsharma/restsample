@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.my.sample.config.security.SecurityUserContext;
 import com.my.sample.converter.CustomerConverter;
 import com.my.sample.data.CustomerData;
+import com.my.sample.data.SearchCustomerData;
 import com.my.sample.domain.Customer;
 import com.my.sample.domain.User;
 import com.my.sample.repository.CustomerRepository;
@@ -84,6 +86,20 @@ public class CustomerServiceImpl implements CustomerService {
 			customerDataList.add(customerData);
 		}
 		return customerDataList;
+	}
+	
+	@Override
+	public List<CustomerData> advanceSearch(SearchCustomerData searchCustomerData){
+	    List<CustomerData> customerDataList = new ArrayList<CustomerData>();
+            List<Customer> customerList = customerRepository.advanceSearch(searchCustomerData.getName(), searchCustomerData.getMobile(), searchCustomerData.getEmail());
+            CustomerData customerData = null;
+            for (Customer customer : customerList) {
+                customerData = new CustomerData();
+                CustomerConverter.convert(customer, customerData);
+                customerDataList.add(customerData);
+            }
+            return customerDataList;
+	    
 	}
 
 }
