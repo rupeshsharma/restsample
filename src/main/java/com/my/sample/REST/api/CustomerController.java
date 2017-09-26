@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.sample.config.security.Authorities;
 import com.my.sample.config.security.RestSecurity;
 import com.my.sample.data.CustomerData;
+import com.my.sample.data.SearchCustomerData;
 import com.my.sample.service.CustomerService;
 
 @RestController
@@ -59,4 +60,10 @@ public class CustomerController {
 			@PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date lastVisitedDate) {
 		return new ResponseEntity<>(customerService.getCustomerVisitedBeforeDate(lastVisitedDate), HttpStatus.OK);
 	}
+	
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN })
+    	@RequestMapping(value = "/advanceSearch", method = RequestMethod.POST)
+    	public ResponseEntity<?> advanceSearch(@RequestBody SearchCustomerData searchCustomerData) {
+        	return new ResponseEntity<>(customerService.advanceSearch(searchCustomerData), HttpStatus.OK);
+    	}
 }
