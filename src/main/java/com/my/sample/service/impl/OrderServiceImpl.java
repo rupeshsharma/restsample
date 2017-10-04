@@ -22,6 +22,7 @@ import com.my.sample.data.MonthlyRevenueChartData;
 import com.my.sample.data.MonthlySalesChartData;
 import com.my.sample.domain.OrderDomain;
 import com.my.sample.domain.User;
+import com.my.sample.enums.OrderStatus;
 import com.my.sample.repository.OrderDetailRepository;
 import com.my.sample.repository.OrderRepository;
 import com.my.sample.service.OrderService;
