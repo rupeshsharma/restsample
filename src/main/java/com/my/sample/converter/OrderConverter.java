@@ -22,7 +22,7 @@ public class OrderConverter {
 		target.setSgst(source.getSgst());
 		target.setOrderDate(new Date());
 		target.setOrderFrom(source.getOrderFrom());
-		target.setStatus(OrderStatus.PROCESSING.getValue());
+		target.setStatus(OrderStatus.RECEIVED.getValue());
 		target.setCustomer(new Customer(source.getCustomer().getId()));
 		target.setDiningMode(source.getDiningMode());
 		target.setDiscount(source.getDiscount());
