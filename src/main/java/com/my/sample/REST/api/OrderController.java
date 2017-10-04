@@ -102,4 +102,30 @@ public class OrderController {
 	public ResponseEntity<?> getOrderHistoryForCustomer(@PathVariable Long id) throws Exception {
 		return new ResponseEntity<>(orderService.getOrderHistoryForCustomer(id), HttpStatus.OK);
 	}
+	
+	@RestSecurity(authority = { Authorities.ROLE_ADMIN, Authorities.ROLE_USER })
+	@RequestMapping(value = "/status/customer", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrderByStatusForCustomer() throws Exception {
+        return new ResponseEntity<>(orderService.getOrderByStatusForCustomer(), HttpStatus.OK);
+    }
+    
+    @RestSecurity(authority = { Authorities.ROLE_ADMIN, Authorities.ROLE_USER })
+    @RequestMapping(value = "/status/staff", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrderByStatusForStaff() throws Exception {
+        return new ResponseEntity<>(orderService.getOrderByStatusForStaff(), HttpStatus.OK);
+    }
+    
+    @RestSecurity(authority = { Authorities.ROLE_ADMIN, Authorities.ROLE_USER })
+    @RequestMapping(value = "/status/serve/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> setServeStatusForOrder(@PathVariable Long id) throws Exception {
+        orderService.setServeStatusForOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @RestSecurity(authority = { Authorities.ROLE_ADMIN, Authorities.ROLE_USER })
+    @RequestMapping(value = "/status/complete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> setCompleteStatusForOrder(@PathVariable Long id) throws Exception {
+        orderService.setCompleteStatusForOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
