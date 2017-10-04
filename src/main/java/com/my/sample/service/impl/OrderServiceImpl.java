@@ -233,5 +233,37 @@ public class OrderServiceImpl implements OrderService {
 	public List<MonthlySalesChartData> getMonthlyChartPerItemDataInRange(Date fromDate, Date toDate, Long id) {
 		return orderDetailRepsitory.getMonthlyChartPerItemDataInRange(fromDate, toDate, id);
 	}
+	
+	@Override
+	public List<Long> getOrderByStatusForCustomer(){
+	    return orderRepository.getOrderByStatusForCustomer();
+	}
+	
+	@Override
+	public List<OrderData> getOrderByStatusForStaff(){
+	    List<OrderData> orderDataList = new ArrayList<OrderData>();
+        List<OrderDomain> orderList = orderRepository.getOrderByStatusForStaff();
+        OrderData orderData = null;
+        for (OrderDomain order : orderList) {
+            orderData = new OrderData();
+            OrderConverter.convert(order, orderData, Boolean.TRUE);
+            orderDataList.add(orderData);
+        }
+        return orderDataList;
+	}
+	
+	@Override
+    public void setServeStatusForOrder(Long id){
+	    OrderDomain order = orderRepository.findOne(id);
+	    order.setStatus(OrderStatus.SERVING.getValue());
+	    orderRepository.save(order);
+	}
+	
+	@Override
+    public void setCompleteStatusForOrder(Long id){
+	    OrderDomain order = orderRepository.findOne(id);
+        order.setStatus(OrderStatus.COMPLETED.getValue());
+        orderRepository.save(order);
+    }
 
 }
