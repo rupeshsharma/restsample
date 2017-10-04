@@ -1,7 +1,7 @@
 package com.my.sample.enums;
 
 public enum OrderStatus {
-	PROCESSING("Processing"), COMPLETED("Completed");
+	RECEIVED("Received"), COMPLETED("Completed"), SERVING("Serving");
 	private final String value;
 
 	OrderStatus(String value) {
