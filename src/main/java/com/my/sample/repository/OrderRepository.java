@@ -66,5 +66,11 @@ public interface OrderRepository extends JpaRepository<OrderDomain, Long> {
 
 	@Query("SELECT New com.my.sample.data.YearlyRevenueChartData(DATE_FORMAT(o.orderDate,'%Y'), SUM(o.grandTotal)) from OrderDomain o group by DATE_FORMAT(o.orderDate,'%Y')")
 	List<YearlyRevenueChartData> getYearlyChartCollectionDataInRange();
+	
+	@Query("SELECT o.orderNumber from OrderDomain o where o.status LIKE '%Serving%'")
+	List<Long> getOrderByStatusForCustomer();
+	
+	@Query("SELECT o from OrderDomain o where o.status NOT LIKE '%Completed%'")
+	List<OrderDomain> getOrderByStatusForStaff();
 
 }
