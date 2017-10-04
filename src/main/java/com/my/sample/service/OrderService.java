@@ -62,5 +62,13 @@ public interface OrderService {
 	List<YearlySalesChartData> getYearlyChartPerItemDataInRange(Long id);
 
 	List<MonthlySalesChartData> getMonthlyChartPerItemDataInRange(Date fromDate, Date toDate, Long id);
+	
+	List<Long> getOrderByStatusForCustomer();
+	
+	List<OrderData> getOrderByStatusForStaff();
+	
+	void setServeStatusForOrder(Long id);
+	
+	void setCompleteStatusForOrder(Long id);
 
 }
