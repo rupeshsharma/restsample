@@ -36,6 +36,9 @@ public class Customer implements Serializable {
 
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "ADDRESS")
+        private String address;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
@@ -153,4 +156,12 @@ public class Customer implements Serializable {
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
+	
+	public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
