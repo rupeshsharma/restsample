@@ -22,6 +22,8 @@ public class CustomerData implements Serializable {
 	private Date lastVisited;
 
 	private String email;
+	
+	private String address;
 
 	public CustomerData() {
 	}
@@ -92,5 +94,13 @@ public class CustomerData implements Serializable {
 	public void setLastVisited(Date lastVisited) {
 		this.lastVisited = lastVisited;
 	}
+	
+	public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
 }
