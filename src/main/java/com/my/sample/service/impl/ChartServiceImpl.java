@@ -98,7 +98,8 @@ public class ChartServiceImpl implements ChartService {
 		Integer month = dashboardChartDataRequest.getMonth();
 		Date fromDate = null;
 		Date toDate = null;
-		if (dashboardChartDataRequest.getMonth() != null) {
+		if (AppConstants.Chart.RENDER_BY_DAILY.equalsIgnoreCase(dashboardChartDataRequest.getRenderChartBy())
+				&& dashboardChartDataRequest.getMonth() != null) {
 			fromDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse("1-" + month + "-" + year);
 			toDate = new SimpleDateFormat(AppConstants.DATE_FORMAT).parse(daysCount + "-" + month + "-" + year);
 		} else {
@@ -252,7 +253,8 @@ public class ChartServiceImpl implements ChartService {
 	}
 
 	@Override
-	public List<GraphData> getPerItemGraphData(ItemGraphDataRequest itemGraphDataRequest, Long id) throws ParseException {
+	public List<GraphData> getPerItemGraphData(ItemGraphDataRequest itemGraphDataRequest, Long id)
+			throws ParseException {
 		List<GraphData> graphDataList = new ArrayList<GraphData>();
 		Date fromDate = null;
 		Date toDate = null;
